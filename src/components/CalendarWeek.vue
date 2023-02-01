@@ -2,7 +2,7 @@
 import dayjs from 'dayjs/esm/index.js'
 import weekday from 'dayjs/plugin/weekday.js'
 import weekOfYear from 'dayjs/plugin/weekOfYear.js'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import CalendarDateIndicator from './CalendarDateIndicator.vue'
 import CalendarDateSelector from './CalendarDateSelector.vue'
 import CalendarWeekdays from './CalendarWeekdays.vue'
@@ -35,18 +35,16 @@ const getWeekday = (date) => dayjs(date).weekday()
 
 const daysBeforeSelectedDate = computed(() => {
   const firstDayOfTheWeekDay = getWeekday(currentWeekDays.value[0].date)
-  const previousWeek = dayjs(`${year.value}-${month.value}-${calendarDay.value}`).subtract(1, 'week')
   const visibleNumberOfDaysFromPreviousWeek = firstDayOfTheWeekDay ? firstDayOfTheWeekDay - 1 : 6
   const previousWeekMondayDate = dayjs(currentWeekDays.value[0].date)
-    .subtract(visibleNumberOfDaysFromPreviousWeek, 'day')
-    .date()
+    .subtract(visibleNumberOfDaysFromPreviousWeek, 'days')
+    .format('YYYY-MM-DD')
   return [...Array(visibleNumberOfDaysFromPreviousWeek)].map(
     (day, index) => {
       return {
         date: dayjs(
-          `${previousWeek.year()}-${previousWeek.month() +
-          1}-${previousWeekMondayDate + index}`
-        ).format('YYYY-MM-DD'),
+          `${dayjs(previousWeekMondayDate).add(index + 1, 'days')}`
+        )
       }
     }
   )
@@ -54,8 +52,9 @@ const daysBeforeSelectedDate = computed(() => {
 
 const daysAfterSelectedDate = computed(() => {
   const currentWeek = dayjs(`${year.value}-${month.value}-${calendarDay.value}`)
+  const nextWeekMonth = currentWeek.add(1, 'week').format('MM')
   const lastDayOfTheWeekDay = getWeekday(currentWeekDays.value[6].date)
-  const daysTillTheEndOfTheWeek = lastDayOfTheWeekDay !== 0 ? 7 - lastDayOfTheWeekDay : lastDayOfTheWeekDay
+  const daysTillTheEndOfTheWeek = lastDayOfTheWeekDay ? 7 - lastDayOfTheWeekDay : lastDayOfTheWeekDay
   const currentWeekSundayDate = dayjs(currentWeekDays.value[6].date)
     .add(daysTillTheEndOfTheWeek - 1, 'day')
     .date()
@@ -73,19 +72,23 @@ const daysAfterSelectedDate = computed(() => {
       }
       return {
         date: dayjs(
-          `${currentWeek.year()}-${currentWeek.month() + 1}-${daysCounter()}`)
-          .format('YYYY-MM-DD'),
+          `${currentWeek.year()}-${nextWeekMonth}-${daysCounter()}`)
+          .format('YYYY-MM-DD')
       }
     }
   )
 })
 
-
 const days = computed(() => [
   ...daysBeforeSelectedDate.value,
-  ...currentWeekDays.value,
-  ...daysAfterSelectedDate.value
+  //...currentWeekDays.value,
+  // ...daysAfterSelectedDate.value
 ])
+
+onMounted(() => {
+  // console.log(days.value)
+  // console.log(daysAfterSelectedDate.value)
+}) 
 </script>
 
 <template>
