@@ -10,7 +10,7 @@ const props = defineProps({
 
 const calendarStore = useCalendarStore()
 
-const label = computed(() => dayjs(props.day.date).subtract(1, 'days').format("D"))
+const label = computed(() => dayjs(props.day.date).subtract(1, 'days').format("DD.MM."))
 
 const moodPerDay = computed(() => {
   let mood
@@ -23,8 +23,6 @@ const moodPerDay = computed(() => {
 })
 
 const dayClasses = ref({
-  'calendar-day--not-current': !props.day.isCurrentWeek,
-  'ahaha': props.day.isCurrentWeek,
   'calendar-day--today': props.isToday,
   // 'calendar-day--excellent': moodPerDay.value?.color === 'purple',
   // 'calendar-day--good': moodPerDay.value?.color === 'green',
@@ -35,8 +33,7 @@ const dayClasses = ref({
 
 <template>
   <li class="calendar-day" :class="dayClasses">
-    {{ day.date }}
-    <!-- <span>{{ label }}</span> -->
+    <span>{{ label }}</span>
   </li>
 </template>
 
@@ -48,14 +45,6 @@ const dayClasses = ref({
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.ahaha {
-  background: orchid;
-}
-
-.calendar-day--not-current {
-  background-color: antiquewhite;
 }
 
 .calendar-day--today {
