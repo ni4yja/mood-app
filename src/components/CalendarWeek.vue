@@ -1,6 +1,7 @@
 <script setup>
 import dayjs from 'dayjs/esm/index.js'
 import weekday from 'dayjs/plugin/weekday.js'
+import utc from 'dayjs/plugin/utc.js'
 import { ref, computed } from 'vue'
 import CalendarDateIndicator from './CalendarDateIndicator.vue'
 import CalendarDateSelector from './CalendarDateSelector.vue'
@@ -14,8 +15,9 @@ const selectDate = (newSelectedDate) => {
 }
 
 dayjs.extend(weekday)
+dayjs.extend(utc)
 
-const today = computed(() => dayjs().format('YYYY-MM-DD'))
+const today = computed(() => dayjs().utc().format('YYYY-MM-DD'))
 const calendarDay = computed(() => Number(selectedDate.value.format('DD')))
 const month = computed(() => Number(selectedDate.value.format('M')))
 const year = computed(() => Number(selectedDate.value.format('YYYY')))
@@ -42,7 +44,7 @@ const daysBeforeSelectedDate = computed(() => {
       return {
         date: dayjs(
           `${dayjs(previousWeekMondayDate).add(index + 1, 'days')}`
-        )
+        ).utc().format('YYYY-MM-DD')
       }
     }
   )
@@ -71,7 +73,8 @@ const daysAfterSelectedDate = computed(() => {
       }
       return {
         date: dayjs(
-          `${currentWeek.year()}-${currentWeekMonth}-${daysCounter()}`)
+          `${currentWeek.year()}-${currentWeekMonth}-${daysCounter()}`
+        ).utc().format('YYYY-MM-DD')
       }
     }
   )
