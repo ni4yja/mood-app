@@ -9,8 +9,8 @@ const calendarStore = useCalendarStore()
 
 dayjs.extend(relativeTime)
 
-const today = dayjs()
-const timestamp = new Date().getTime() / 1000
+const today = ref(dayjs())
+const timestamp = new Date().getTime(today.value) / 1000
 
 const formattedDates = ref({
   today: dayjs().format('dddd, D MMM YYYY'),
@@ -20,7 +20,6 @@ const formattedDates = ref({
 
 const setMoodStats = (date, timestamp, mood) => {
   calendarStore.setTodayMood(date, timestamp, mood)
-  //console.log(calendarStore.daysWithMoodColor)
 }
 
 const todayMood = computed(() => {
