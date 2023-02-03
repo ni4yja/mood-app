@@ -1,6 +1,6 @@
 <script setup>
 import dayjs from 'dayjs/esm/index.js'
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import { useCalendarStore } from '../stores/mood.js'
 
 const props = defineProps({
@@ -22,12 +22,12 @@ const moodPerDay = computed(() => {
   return mood
 })
 
-const dayClasses = ref({
+const dayClasses = computed(() => ({
   'calendar-day--today': props.isToday,
   'calendar-day--excellent': moodPerDay.value?.color === 'purple',
   'calendar-day--good': moodPerDay.value?.color === 'green',
   'calendar-day--awful': moodPerDay.value?.color === 'red',
-})
+}))
 </script>
 
 <template>
