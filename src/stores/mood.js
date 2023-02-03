@@ -1,9 +1,12 @@
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
 import dayjs from 'dayjs/esm/index.js'
 import utc from 'dayjs/plugin/utc.js'
 
 dayjs.extend(utc)
+
+const today = ref(dayjs())
 
 export const useCalendarStore = defineStore({
   id: 'main',
@@ -17,6 +20,7 @@ export const useCalendarStore = defineStore({
         mood: 'Good'
       }
     ]),
+    todayRecord: {},
     calendar: useStorage('dayList', [])
   }),
   actions: {
@@ -56,22 +60,38 @@ export const useCalendarStore = defineStore({
         }
       )
 
-      const recordsPerDay = recordsWithDifference.filter((record, index) => {
+      const recordsBeforeToday = recordsWithDifference.filter(
+        (record, index) => {
+          if (
+            index === 0 ||
+            (record.difference > 0 &&
+              recordsWithUniqueTimestamp[index - 1].date !== record.date &&
+              dayjs(record.date).utc().format('YYYY-MM-DD') !==
+                dayjs(today.value).utc().format('YYYY-MM-DD'))
+          ) {
+            return record
+          }
+        }
+      )
+
+      const todayRecords = recordsWithDifference.filter((record) => {
         if (
-          index === 0 ||
-          (record.difference > 0 &&
-            recordsWithUniqueTimestamp[index - 1].date !== record.date)
+          dayjs(record.date).utc().format('YYYY-MM-DD') ===
+          dayjs(today.value).utc().format('YYYY-MM-DD')
         ) {
           return record
         }
       })
 
-      this.calendar = recordsPerDay
+      this.calendar = [
+        ...recordsBeforeToday,
+        todayRecords[todayRecords.length - 1]
+      ]
     }
   },
   getters: {
     daysWithMoodColor(state) {
-      const days = [...state.totalRecords]
+      const days = [...state.calendar]
       return days.map((day) => {
         if (day.mood === 'Excellent') {
           day = {

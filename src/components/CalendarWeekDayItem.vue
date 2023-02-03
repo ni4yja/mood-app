@@ -28,7 +28,6 @@ const dayClasses = ref({
   'calendar-day--good': moodPerDay.value?.color === 'green',
   'calendar-day--awful': moodPerDay.value?.color === 'red',
 })
-
 </script>
 
 <template>
@@ -49,7 +48,7 @@ const dayClasses = ref({
 
 .calendar-day--today {
   padding-top: 4px;
-  /* background-color: #f9f9f9; */
+  background-color: #f9f9f9;
   box-shadow: inset 0px 0px 0 2px #222362;
   border-radius: 4px;
 }
