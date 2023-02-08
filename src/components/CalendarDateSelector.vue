@@ -22,7 +22,6 @@ const selectNext = () => {
   let newSelectedDate = dayjs(props.selectedDate).add(1, 'week')
   emit('dateSelected', newSelectedDate)
 }
-
 </script>
 
 <template>

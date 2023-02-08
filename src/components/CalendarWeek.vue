@@ -1,6 +1,5 @@
 <script setup>
 import dayjs from 'dayjs/esm/index.js'
-import utc from 'dayjs/plugin/utc.js'
 import en from 'dayjs/locale/en.js'
 import { ref, computed } from 'vue'
 import CalendarDateIndicator from './CalendarDateIndicator.vue'
@@ -19,19 +18,16 @@ const selectDate = (newSelectedDate) => {
   selectedDate.value = newSelectedDate
 }
 
-dayjs.extend(utc)
-
 const startOfWeek = computed(() => dayjs(selectedDate.value).startOf('week'))
-const weekdays = computed(() => [...Array(7)].fill(startOfWeek.value).map(
-  (day, index) => {
+const weekdays = computed(() =>
+  [...Array(7)].fill(startOfWeek.value).map((day, index) => {
     return {
-      date: day.add(index, 'day').format('YYYY-MM-DD'),
+      date: day.add(index, 'day').format('YYYY-MM-DD')
     }
-  }
-))
+  })
+)
 
-const today = computed(() => dayjs().utc().format('YYYY-MM-DD'))
-
+const today = computed(() => dayjs().format('YYYY-MM-DD'))
 </script>
 
 <template>
@@ -39,11 +35,20 @@ const today = computed(() => dayjs().utc().format('YYYY-MM-DD'))
   <div class="calendar-week">
     <div class="calendar-week-header">
       <CalendarDateIndicator :selected-date="selectedDate" />
-      <CalendarDateSelector :current-date="today" :selected-date="selectedDate" @dateSelected="selectDate" />
+      <CalendarDateSelector
+        :current-date="today"
+        :selected-date="selectedDate"
+        @dateSelected="selectDate"
+      />
     </div>
     <CalendarWeekdays />
     <ol class="days-grid">
-      <CalendarWeekDayItem v-for="day in weekdays" :key="day.date" :day="day" :is-today="day.date === today" />
+      <CalendarWeekDayItem
+        v-for="day in weekdays"
+        :key="day.date"
+        :day="day"
+        :is-today="day.date === today"
+      />
     </ol>
   </div>
 </template>
