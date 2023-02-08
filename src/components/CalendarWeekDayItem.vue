@@ -10,12 +10,15 @@ const props = defineProps({
 
 const calendarStore = useCalendarStore()
 
-const label = computed(() => dayjs(props.day.date).format("DD.MM."))
+const label = computed(() => dayjs(props.day.date).format('DD.MM.'))
 
 const moodPerDay = computed(() => {
   let mood
   calendarStore.daysWithMoodColor.map((record) => {
-    if (dayjs(record.date).format('dddd, D MMM YYYY') === dayjs(props.day.date).format('dddd, D MMM YYYY')) {
+    if (
+      dayjs(record.date).format('dddd, D MMM YYYY') ===
+      dayjs(props.day.date).format('dddd, D MMM YYYY')
+    ) {
       mood = record
     }
   })
@@ -26,7 +29,7 @@ const dayClasses = computed(() => ({
   'calendar-day--today': props.isToday,
   'calendar-day--excellent': moodPerDay.value?.color === 'purple',
   'calendar-day--good': moodPerDay.value?.color === 'green',
-  'calendar-day--awful': moodPerDay.value?.color === 'red',
+  'calendar-day--awful': moodPerDay.value?.color === 'red'
 }))
 </script>
 

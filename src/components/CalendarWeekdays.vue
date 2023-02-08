@@ -18,7 +18,7 @@ const weekdays = computed(() => WEEKDAYS.value)
   list-style: none;
 }
 
-.day-of-week>* {
+.day-of-week > * {
   text-align: center;
 }
 </style>

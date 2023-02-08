@@ -9,8 +9,12 @@ const props = defineProps({
   selectedDate: Object
 })
 
-const selectedWeek = computed(() =>
-  `Week ${dayjs(props.selectedDate).week()}, ${props.selectedDate.format("MMMM YYYY")}`)
+const selectedWeek = computed(
+  () =>
+    `Week ${dayjs(props.selectedDate).week()}, ${props.selectedDate.format(
+      'MMMM YYYY'
+    )}`
+)
 </script>
 
 <template>

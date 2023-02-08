@@ -23,20 +23,34 @@ const setMoodStats = (date, timestamp, mood) => {
 }
 
 const todayMood = computed(() => {
-  const allDaysSorted = calendarStore.daysWithMoodColor.sort((dayOne, dayTwo) => {
-    dayTwo.timestamp - dayOne.timestamp
-  })
-  return allDaysSorted[allDaysSorted.length - 1]
+  const allDaysSorted = calendarStore.daysWithMoodColor.sort(
+    (dayOne, dayTwo) => {
+      dayTwo.timestamp - dayOne.timestamp
+    }
+  )
+  return dayjs(allDaysSorted[allDaysSorted.length - 1]?.date).format(
+    'dddd, D MMM YYYY'
+  ) === dayjs(today.value).format('dddd, D MMM YYYY')
+    ? allDaysSorted[allDaysSorted.length - 1]
+    : {}
 })
-
 </script>
 
 <template>
   <h1>How do you feel today?</h1>
   <div class="mood-options">
-    <button class="excellent" @click="setMoodStats(today, timestamp, 'Excellent')">Excellent</button>
-    <button class="good" @click="setMoodStats(today, timestamp, 'Good')">Good</button>
-    <button class="awful" @click="setMoodStats(today, timestamp, 'Awful')">Awful</button>
+    <button
+      class="excellent"
+      @click="setMoodStats(today, timestamp, 'Excellent')"
+    >
+      Excellent
+    </button>
+    <button class="good" @click="setMoodStats(today, timestamp, 'Good')">
+      Good
+    </button>
+    <button class="awful" @click="setMoodStats(today, timestamp, 'Awful')">
+      Awful
+    </button>
   </div>
   <div class="today-mood">
     <div class="view-more yesterday">

@@ -1,12 +1,16 @@
 <script setup>
 import dayjs from 'dayjs/esm/index.js'
-import weekday from 'dayjs/plugin/weekday.js'
-import utc from 'dayjs/plugin/utc.js'
+import en from 'dayjs/locale/en.js'
 import { ref, computed } from 'vue'
 import CalendarDateIndicator from './CalendarDateIndicator.vue'
 import CalendarDateSelector from './CalendarDateSelector.vue'
 import CalendarWeekdays from './CalendarWeekdays.vue'
 import CalendarWeekDayItem from './CalendarWeekDayItem.vue'
+
+dayjs.locale({
+  ...en,
+  weekStart: 1
+})
 
 let selectedDate = ref(dayjs())
 
@@ -14,76 +18,16 @@ const selectDate = (newSelectedDate) => {
   selectedDate.value = newSelectedDate
 }
 
-dayjs.extend(weekday)
-dayjs.extend(utc)
-
-const today = computed(() => dayjs().utc().format('YYYY-MM-DD'))
-const calendarDay = computed(() => Number(selectedDate.value.format('DD')))
-const month = computed(() => Number(selectedDate.value.format('M')))
-const year = computed(() => Number(selectedDate.value.format('YYYY')))
-
-const currentWeekFullDays = computed(() => {
-  return [...Array(7)].map((day, index) => {
+const startOfWeek = computed(() => dayjs(selectedDate.value).startOf('week'))
+const weekdays = computed(() =>
+  [...Array(7)].fill(startOfWeek.value).map((day, index) => {
     return {
-      date: dayjs(`${year.value}-${month.value}-${calendarDay.value + index}`).format('YYYY-MM-DD'),
-      isCurrentWeek: true
+      date: day.add(index, 'day').format('YYYY-MM-DD')
     }
   })
-})
+)
 
-const getWeekday = (date) => dayjs(date).weekday()
-
-const daysBeforeSelectedDate = computed(() => {
-  const firstDayOfTheWeekDay = getWeekday(currentWeekFullDays.value[0].date)
-  const visibleNumberOfDaysFromPreviousWeek = firstDayOfTheWeekDay ? firstDayOfTheWeekDay - 1 : 6
-  const previousWeekMondayDate = dayjs(currentWeekFullDays.value[0].date)
-    .subtract(visibleNumberOfDaysFromPreviousWeek, 'days')
-    .format('YYYY-MM-DD')
-  return [...Array(visibleNumberOfDaysFromPreviousWeek)].map(
-    (day, index) => {
-      return {
-        date: dayjs(
-          `${dayjs(previousWeekMondayDate).add(index + 1, 'days')}`
-        ).utc().format('YYYY-MM-DD')
-      }
-    }
-  )
-})
-
-const daysAfterSelectedDate = computed(() => {
-  const currentWeek = dayjs(`${year.value}-${month.value}-${calendarDay.value}`)
-  const currentWeekMonth = currentWeek.format('MM')
-  const lastDayOfTheWeekDay = getWeekday(currentWeekFullDays.value[6].date)
-  const daysTillTheEndOfTheWeek = lastDayOfTheWeekDay ? 7 - lastDayOfTheWeekDay : lastDayOfTheWeekDay
-  const currentWeekSundayDate = dayjs(currentWeekFullDays.value[0].date)
-    .add(daysTillTheEndOfTheWeek + 1, 'days')
-    .date()
-
-  return [...Array(daysTillTheEndOfTheWeek)].map(
-    (day, index) => {
-      const daysCounter = () => {
-        let dayNumber = ''
-        if (currentWeekSundayDate - daysTillTheEndOfTheWeek <= 0) {
-          dayNumber = calendarDay.value + index
-        }
-        else {
-          dayNumber = `${currentWeekSundayDate - daysTillTheEndOfTheWeek + index}`
-        }
-        return dayNumber
-      }
-      return {
-        date: dayjs(
-          `${currentWeek.year()}-${currentWeekMonth}-${daysCounter()}`
-        ).utc().format('YYYY-MM-DD')
-      }
-    }
-  )
-})
-
-const days = computed(() => [
-  ...daysBeforeSelectedDate.value,
-  ...daysAfterSelectedDate.value,
-])
+const today = computed(() => dayjs().format('YYYY-MM-DD'))
 </script>
 
 <template>
@@ -91,11 +35,20 @@ const days = computed(() => [
   <div class="calendar-week">
     <div class="calendar-week-header">
       <CalendarDateIndicator :selected-date="selectedDate" />
-      <CalendarDateSelector :current-date="today" :selected-date="selectedDate" @dateSelected="selectDate" />
+      <CalendarDateSelector
+        :current-date="today"
+        :selected-date="selectedDate"
+        @dateSelected="selectDate"
+      />
     </div>
     <CalendarWeekdays />
     <ol class="days-grid">
-      <CalendarWeekDayItem v-for="day in days" :key="day.date" :day="day" :is-today="day.date === today" />
+      <CalendarWeekDayItem
+        v-for="day in weekdays"
+        :key="day.date"
+        :day="day"
+        :is-today="day.date === today"
+      />
     </ol>
   </div>
 </template>

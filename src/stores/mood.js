@@ -1,10 +1,7 @@
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
 import dayjs from 'dayjs/esm/index.js'
-import utc from 'dayjs/plugin/utc.js'
 import useCounters from '../helpers/store-counters.js'
-
-dayjs.extend(utc)
 
 const {
   countRecordsWithUniqueTimestamp,
@@ -16,10 +13,9 @@ const {
 export const useCalendarStore = defineStore({
   id: 'main',
   state: () => ({
-    currentDay: {},
     totalRecords: useStorage('recordList', [
       {
-        date: dayjs('2023-01-31 14:00').utc().format('YYYY-MM-DD HH:mm'),
+        date: dayjs('2023-01-31 14:00').format('YYYY-MM-DD HH:mm'),
         timestamp: 1675187861.045,
         difference: null,
         mood: 'Good'
@@ -30,7 +26,7 @@ export const useCalendarStore = defineStore({
   actions: {
     setTodayMood(date, timestamp, mood) {
       const dataSet = {
-        date: dayjs(date).utc().format('YYYY-MM-DD HH:mm'),
+        date: dayjs(date).format('YYYY-MM-DD HH:mm'),
         timestamp,
         mood
       }
