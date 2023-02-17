@@ -1,9 +1,77 @@
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+
+const props = defineProps({
+  limit: {
+    type: Number,
+    default: 140
+  },
+  modelValue: {
+    type: String
+  }
+})
+
+const emit = defineEmits(['update:modelValue'])
+
+const textarea = ref(null)
+
+const valueAllowed = computed(() => {
+  return props.limit ? props.modelValue.slice(0, props.limit) : props.modelValue
+})
+
+const valueExcess = computed(() => {
+  return props.limit ? props.modelValue.slice(props.limit) : ''
+})
+
+const limitStatus = computed(() => {
+  return (props.modelValue.length / props.limit) * 100
+})
+
+const remainingCharacters = computed(() => {
+  return props.limit - props.modelValue.length
+})
+
+const textareaStyle = computed(() => {
+  return getComputedStyle(textarea.value)
+})
+
+const updateValue = (e) => {
+  textareaGrow()
+  emit('update:modelValue', e.target.value)
+}
+
+const textareaGrow = () => {
+  const paddingTop = parseInt(
+    textareaStyle.value.getPropertyValue(`padding-top`),
+    10
+  )
+  const paddingBottom = parseInt(
+    textareaStyle.value.getPropertyValue(`padding-bottom`),
+    10
+  )
+  const lineHeight = parseInt(
+    textareaStyle.value.getPropertyValue(`line-height`),
+    10
+  )
+
+  textarea.value.rows = 1
+
+  const innerHeight = textarea.value.scrollHeight - paddingTop - paddingBottom
+
+  textarea.value.rows = innerHeight / lineHeight
+}
+
+onMounted(() => {
+  textareaGrow()
+})
+</script>
+
 <template>
   <div :class="[
     'note-box',
     {
-      'has-exceeded-limit': limitStatus > 100,
-    },
+      'has-exceeded-limit': limitStatus > 100
+    }
   ]">
     <div :class="`note-box__htmlarea`" aria-hidden>
       {{ valueAllowed }}<em v-if="valueExcess">{{ valueExcess }}</em>
@@ -23,87 +91,6 @@
     </div>
   </div>
 </template>
-
-<script>
-import { ref, computed, onMounted } from 'vue';
-export default {
-  props: {
-    limit: {
-      type: Number,
-      default: 140,
-    },
-    modelValue: {
-      type: String,
-    },
-  },
-  setup(props) {
-    const textarea = ref(null);
-
-    const valueAllowed = computed(() => {
-      return props.limit
-        ? props.modelValue.slice(0, props.limit)
-        : props.modelValue;
-    });
-
-    const valueExcess = computed(() => {
-      return props.limit ? props.modelValue.slice(props.limit) : '';
-    });
-
-    const limitStatus = computed(() => {
-      return (props.modelValue.length / props.limit) * 100;
-    });
-
-    const remainingCharacters = computed(() => {
-      return props.limit - props.modelValue.length;
-    });
-
-    const textareaStyle = computed(() => {
-      return getComputedStyle(textarea.value);
-    });
-
-    function updateValue(e) {
-      textareaGrow();
-      this.$emit('update:modelValue', e.target.value);
-    };
-
-    function textareaGrow() {
-      const paddingTop = parseInt(
-        textareaStyle.value.getPropertyValue(`padding-top`),
-        10
-      );
-      const paddingBottom = parseInt(
-        textareaStyle.value.getPropertyValue(`padding-bottom`),
-        10
-      );
-      const lineHeight = parseInt(
-        textareaStyle.value.getPropertyValue(`line-height`),
-        10
-      );
-
-      textarea.value.rows = 1;
-
-      const innerHeight = textarea.value.scrollHeight - paddingTop - paddingBottom;
-
-      textarea.value.rows = innerHeight / lineHeight;
-    };
-
-    onMounted(() => {
-      textareaGrow();
-    });
-
-    return {
-      textarea,
-      valueAllowed,
-      valueExcess,
-      limitStatus,
-      remainingCharacters,
-      textareaStyle,
-      updateValue,
-      textareaGrow,
-    }
-  },
-};
-</script>
 
 <style scoped>
 * {
@@ -175,7 +162,7 @@ em {
   font-size: 0.75em;
 }
 
-.note-box__remainingCharacters .has-exceeded-limit {
+.has-exceeded-limit .note-box__remainingCharacters {
   color: var(--color-danger);
 }
 
@@ -193,7 +180,7 @@ em {
   stroke: var(--color-primary);
 }
 
-.note-box__counterProgress .has-exceeded-limit {
+.has-exceeded-limit .note-box__counterProgress {
   stroke: var(--color-danger);
   animation: counterPulse 0.3s ease-in-out;
   animation-iteration-count: 1;

@@ -1,9 +1,9 @@
 <script setup>
 import DeleteIcon from './icons/DeleteIcon.vue'
 import NoteBox from './NoteBox.vue'
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const note = ref('');
+const note = ref('')
 </script>
 
 <template>

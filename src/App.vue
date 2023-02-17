@@ -37,13 +37,16 @@ const todayMood = computed(() => {
     : {}
 })
 
-const isModalOpen = ref(false);
+const isModalOpen = ref(false)
 </script>
 
 <template>
   <h1>How do you feel today?</h1>
   <div class="mood-options">
-    <button class="excellent" @click="setMoodStats(today, timestamp, 'Excellent')">
+    <button
+      class="excellent"
+      @click="setMoodStats(today, timestamp, 'Excellent')"
+    >
       Excellent
     </button>
     <button class="good" @click="setMoodStats(today, timestamp, 'Good')">
@@ -67,7 +70,12 @@ const isModalOpen = ref(false);
       </div>
       <div class="card-content">
         <h2>{{ todayMood?.mood }}</h2>
-        <button v-if="todayMood?.mood" title="Add a Note" class="note-button" @click="isModalOpen = true">
+        <button
+          v-if="todayMood?.mood"
+          title="Add a Note"
+          class="note-button"
+          @click="isModalOpen = true"
+        >
           <AddNoteIcon />
         </button>
       </div>
@@ -113,11 +121,11 @@ button.good:hover {
 }
 
 button.awful {
-  border-color: #EB6862;
+  border-color: #eb6862;
 }
 
 button.awful:hover {
-  background: #EB6862;
+  background: #eb6862;
 }
 
 .today-mood {
@@ -150,8 +158,8 @@ button.awful:hover {
 }
 
 .day-card.red {
-  background: #EB6862;
-  border-color: #EB6862;
+  background: #eb6862;
+  border-color: #eb6862;
 }
 
 .view-more {
@@ -176,10 +184,10 @@ button.awful:hover {
 
 .note-button:hover,
 .note-button:focus {
-  color: #FBF7FF;
+  color: #fbf7ff;
 }
 
 .note-button:focus {
-  outline-color: #FBF7FF;
+  outline-color: #fbf7ff;
 }
 </style>
