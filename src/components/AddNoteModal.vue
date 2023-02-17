@@ -2,26 +2,39 @@
 import DeleteIcon from './icons/DeleteIcon.vue'
 import NoteBox from './NoteBox.vue'
 import { ref, computed } from 'vue'
+import { useCalendarStore } from '../stores/mood'
+
+const calendarStore = useCalendarStore()
 
 const note = ref('')
 
 const props = defineProps({
   isModalOpen: Boolean,
-  color: String,
-  mood: String,
+  todayRecord: Object
 })
 
-const textForMood = computed(() => props.mood.toLowerCase())
+const textForMood = computed(() => props.todayRecord.mood.toLowerCase())
 
 const emit = defineEmits(['hideModal'])
+
 const closeModal = () => {
   emit('hideModal')
+}
+
+const addNote = (note) => {
+  if (note.length) {
+    calendarStore.setTodayMemory(props.todayRecord, note)
+  }
 }
 </script>
 
 <template>
-  <div class="modal" :class="{ 'shown': isModalOpen }">
-    <a class="modal-overlay close-btn" aria-label="Close" @click="closeModal()"></a>
+  <div class="modal" :class="{ shown: isModalOpen }">
+    <a
+      class="modal-overlay close-btn"
+      aria-label="Close"
+      @click="closeModal()"
+    ></a>
     <div class="modal-content">
       <div class="modal-header">
         <a class="close-btn" aria-label="Close" @click="closeModal()">
@@ -31,13 +44,17 @@ const closeModal = () => {
         </a>
       </div>
       <div class="modal-body">
-        <h3>✍️ Describe your <em :class="color">{{ textForMood }}</em> mood in 140 characters</h3>
+        <h3>
+          ✍️ Describe your
+          <em :class="todayRecord.color">{{ textForMood }}</em> mood in 140
+          characters
+        </h3>
         <div class="note-wrapper">
           <NoteBox v-model="note" />
         </div>
       </div>
       <div class="modal-footer">
-        <button class="add-btn">Add a note</button>
+        <button class="add-btn" @click="addNote(note)">Save</button>
       </div>
     </div>
   </div>
@@ -115,12 +132,12 @@ const closeModal = () => {
 
 .modal-footer .add-btn:hover {
   background: none;
-  color: #646cff;
+  color: #213547;
 }
 
 .modal-content .note-wrapper {
   padding: 1em;
-  background: #62FBD4;
+  background: #f9f9f9;
 }
 
 h3 em {

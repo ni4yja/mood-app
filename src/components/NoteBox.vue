@@ -67,26 +67,52 @@ onMounted(() => {
 </script>
 
 <template>
-  <div :class="[
-    'note-box',
-    {
-      'has-exceeded-limit': limitStatus > 100
-    }
-  ]">
+  <div
+    :class="[
+      'note-box',
+      {
+        'has-exceeded-limit': limitStatus > 100
+      }
+    ]"
+  >
     <div :class="`note-box__htmlarea`" aria-hidden>
       {{ valueAllowed }}<em v-if="valueExcess">{{ valueExcess }}</em>
     </div>
-    <textarea ref="textarea" :class="`note-box__textarea`" :value="modelValue" rows="1" @input="updateValue" />
+    <textarea
+      ref="textarea"
+      :class="`note-box__textarea`"
+      :value="modelValue"
+      rows="1"
+      @input="updateValue"
+    />
     <div :class="`note-box__limit`">
       <span :class="`note-box__remainingCharacters`">
         {{ remainingCharacters }}
       </span>
-      <svg :class="`note-box__counter`" viewBox="0 0 33.83098862 33.83098862" height="20" width="20"
-        xmlns="http://www.w3.org/2000/svg">
-        <circle :class="`note-box__counterUnderlay`" cx="16.91549431" cy="16.91549431" r="15.91549431" fill="none"
-          stroke-width="2" />
-        <circle :class="`note-box__counterProgress`" :stroke-dasharray="`${limitStatus},100`" cx="16.91549431"
-          cy="16.91549431" r="15.91549431" fill="none" stroke-width="4" />
+      <svg
+        :class="`note-box__counter`"
+        viewBox="0 0 33.83098862 33.83098862"
+        height="20"
+        width="20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          :class="`note-box__counterUnderlay`"
+          cx="16.91549431"
+          cy="16.91549431"
+          r="15.91549431"
+          fill="none"
+          stroke-width="2"
+        />
+        <circle
+          :class="`note-box__counterProgress`"
+          :stroke-dasharray="`${limitStatus},100`"
+          cx="16.91549431"
+          cy="16.91549431"
+          r="15.91549431"
+          fill="none"
+          stroke-width="4"
+        />
       </svg>
     </div>
   </div>
@@ -138,10 +164,6 @@ onMounted(() => {
   resize: none;
   font-family: inherit;
   font-size: inherit;
-}
-
-.note-box__textarea:focus {
-  border-color: darken(var(--color-border), 20%);
 }
 
 em {
