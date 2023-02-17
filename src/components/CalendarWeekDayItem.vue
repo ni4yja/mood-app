@@ -65,6 +65,6 @@ const dayClasses = computed(() => ({
 }
 
 .calendar-day--awful {
-  background: #fc3f21;
+  background: #EB6862;
 }
 </style>
