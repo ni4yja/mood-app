@@ -100,7 +100,7 @@ onMounted(() => {
 }
 
 .note-box {
-  --color-border: #99dde6;
+  --color-border: #646cff;
   --color-danger: #e0245e;
   --color-danger-light: #ffb8c2;
   --color-gray: #657786;

@@ -1,24 +1,37 @@
 <script setup>
 import DeleteIcon from './icons/DeleteIcon.vue'
 import NoteBox from './NoteBox.vue'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const note = ref('')
+
+const props = defineProps({
+  isModalOpen: Boolean,
+  color: String,
+  mood: String,
+})
+
+const textForMood = computed(() => props.mood.toLowerCase())
+
+const emit = defineEmits(['hideModal'])
+const closeModal = () => {
+  emit('hideModal')
+}
 </script>
 
 <template>
-  <div class="modal shown">
-    <a class="modal-overlay close-btn" aria-label="Close"></a>
+  <div class="modal" :class="{ 'shown': isModalOpen }">
+    <a class="modal-overlay close-btn" aria-label="Close" @click="closeModal()"></a>
     <div class="modal-content">
       <div class="modal-header">
-        <a class="close-btn" aria-label="Close">
+        <a class="close-btn" aria-label="Close" @click="closeModal()">
           <span class="icon">
             <DeleteIcon />
           </span>
         </a>
       </div>
       <div class="modal-body">
-        <h3>✍️ Describe your mood in 140 characters</h3>
+        <h3>✍️ Describe your <em :class="color">{{ textForMood }}</em> mood in 140 characters</h3>
         <div class="note-wrapper">
           <NoteBox v-model="note" />
         </div>
@@ -73,29 +86,56 @@ const note = ref('')
 }
 
 .modal .modal-content .modal-header {
-  padding: 1rem 2.5rem;
+  padding: 1.5rem 1.5rem 1rem;
   text-align: right;
 }
 
 .modal .modal-content .modal-body {
-  padding: 1rem 2.5rem;
+  padding: 1rem 1.5rem;
   overflow-y: auto;
   max-height: 50vh;
   position: relative;
   text-align: left;
 }
 
+.modal .modal-content .modal-body h3 {
+  margin-top: 0;
+}
+
 .modal .modal-content .modal-footer {
-  padding: 1rem 2.5rem;
+  padding: 1rem 1.5rem;
   text-align: left;
 }
 
 .modal-footer .add-btn {
   border-color: #646cff;
+  background: #646cff;
+  color: #fff;
+}
+
+.modal-footer .add-btn:hover {
+  background: none;
+  color: #646cff;
 }
 
 .modal-content .note-wrapper {
   padding: 1em;
-  background-color: #e5f6f8;
+  background: #62FBD4;
+}
+
+h3 em {
+  font-weight: 700;
+}
+
+h3 em.purple {
+  color: #aea2f0;
+}
+
+h3 em.green {
+  color: #1bb476;
+}
+
+h3 em.red {
+  color: #eb6862;
 }
 </style>
