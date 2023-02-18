@@ -50,12 +50,8 @@ const closeModal = () => {
 
 <template>
   <h1>How do you feel today?</h1>
-  <code>{{ calendarStore.memoryCards }}</code>
   <div class="mood-options">
-    <button
-      class="excellent"
-      @click="setMoodStats(today, timestamp, 'Excellent')"
-    >
+    <button class="excellent" @click="setMoodStats(today, timestamp, 'Excellent')">
       Excellent
     </button>
     <button class="good" @click="setMoodStats(today, timestamp, 'Good')">
@@ -79,12 +75,7 @@ const closeModal = () => {
       </div>
       <div class="card-content">
         <h2>{{ todayMood?.mood }}</h2>
-        <button
-          v-if="todayMood?.mood"
-          title="Add a Note"
-          class="note-button"
-          @click="openModal()"
-        >
+        <button v-if="todayMood?.mood" title="Add a Note" class="note-button" @click="openModal()">
           <AddNoteIcon />
         </button>
       </div>
@@ -97,12 +88,7 @@ const closeModal = () => {
     </div>
   </div>
   <CalendarWeek />
-  <AddNoteModal
-    v-if="isModalOpen"
-    :isModalOpen="isModalOpen"
-    :todayRecord="todayMood"
-    @hide-modal="closeModal"
-  />
+  <AddNoteModal v-if="isModalOpen" :isModalOpen="isModalOpen" :todayRecord="todayMood" @hide-modal="closeModal" />
 </template>
 
 <style scoped>
