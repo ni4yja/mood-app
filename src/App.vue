@@ -18,8 +18,8 @@ const formattedDates = ref({
   today: dayjs().format('dddd, D MMM YYYY'),
 })
 
-const setMoodStats = (date, timestamp, mood) => {
-  calendarStore.setTodayMood(date, timestamp, mood)
+const setMoodStats = (date, timestamp, mood, memory) => {
+  calendarStore.setTodayMood(date, timestamp, mood, memory)
 }
 
 const todayMood = computed(() => {
@@ -49,13 +49,13 @@ const closeModal = () => {
 <template>
   <h1>How do you feel today?</h1>
   <div class="mood-options">
-    <button class="excellent" @click="setMoodStats(today, timestamp, 'Excellent')">
+    <button class="excellent" @click="setMoodStats(today, timestamp, 'Excellent', '')">
       Excellent
     </button>
-    <button class="good" @click="setMoodStats(today, timestamp, 'Good')">
+    <button class="good" @click="setMoodStats(today, timestamp, 'Good', '')">
       Good
     </button>
-    <button class="awful" @click="setMoodStats(today, timestamp, 'Awful')">
+    <button class="awful" @click="setMoodStats(today, timestamp, 'Awful', '')">
       Awful
     </button>
   </div>

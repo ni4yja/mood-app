@@ -22,15 +22,15 @@ export const useCalendarStore = defineStore({
         timestamp: 1675187861.045
       }
     ]),
-    calendar: useStorage('dayList', []),
-    memoryCards: useStorage('cardList', [])
+    calendar: useStorage('dayList', [])
   }),
   actions: {
-    setTodayMood(date, timestamp, mood) {
+    setTodayMood(date, timestamp, mood, memory) {
       const dataSet = {
         date: dayjs(date).format('YYYY-MM-DD HH:mm'),
         timestamp,
-        mood
+        mood,
+        memory
       }
       let uniqueRecordsSet = new Set().add(dataSet)
       const record = [...uniqueRecordsSet.keys()]
@@ -50,19 +50,16 @@ export const useCalendarStore = defineStore({
         todayRecords[todayRecords.length - 1]
       ]
     },
-    setTodayMemory(todayRecord, note) {
-      this.memoryCards = [
-        this.calendar.map((record) => {
-          if (record.date === todayRecord.date) {
-            record = {
-              ...record,
-              memory: note
-            }
-            return record
+    setMemories(todayRecord, note) {
+      this.calendar = this.calendar.map((record) => {
+        if (record.timestamp === todayRecord.timestamp) {
+          record = {
+            ...record,
+            memory: note
           }
-          return record
-        })
-      ]
+        }
+        return record
+      })
     }
   },
   getters: {
