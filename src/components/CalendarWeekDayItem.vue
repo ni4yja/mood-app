@@ -56,7 +56,7 @@ const dayClasses = computed(() => ({
 <style scoped>
 .calendar-day {
   position: relative;
-  min-height: 100px;
+  min-height: 50px;
   padding: 5px;
   display: flex;
   justify-content: center;
@@ -80,5 +80,12 @@ const dayClasses = computed(() => ({
 
 .calendar-day--awful {
   background: #eb6862;
+}
+
+@media (min-width: 768px) {
+  .calendar-day {
+    min-height: 100px;
+    min-width: 100px;
+  }
 }
 </style>
