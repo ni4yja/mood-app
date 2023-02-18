@@ -4,6 +4,8 @@ import dayjs from 'dayjs/esm/index.js'
 import relativeTime from 'dayjs/esm/index.js'
 import { useCalendarStore } from './stores/mood'
 import CalendarWeek from './components/CalendarWeek.vue'
+import AddNoteIcon from './components/icons/AddNoteIcon.vue'
+import AddNoteModal from './components/AddNoteModal.vue'
 
 const calendarStore = useCalendarStore()
 
@@ -34,15 +36,22 @@ const todayMood = computed(() => {
     ? allDaysSorted[allDaysSorted.length - 1]
     : {}
 })
+
+const isModalOpen = ref(false)
+
+const openModal = () => {
+  isModalOpen.value = true
+}
+
+const closeModal = () => {
+  isModalOpen.value = false
+}
 </script>
 
 <template>
   <h1>How do you feel today?</h1>
   <div class="mood-options">
-    <button
-      class="excellent"
-      @click="setMoodStats(today, timestamp, 'Excellent')"
-    >
+    <button class="excellent" @click="setMoodStats(today, timestamp, 'Excellent')">
       Excellent
     </button>
     <button class="good" @click="setMoodStats(today, timestamp, 'Good')">
@@ -66,6 +75,9 @@ const todayMood = computed(() => {
       </div>
       <div class="card-content">
         <h2>{{ todayMood?.mood }}</h2>
+        <button v-if="todayMood?.mood" title="Add a Note" class="note-button" @click="openModal()">
+          <AddNoteIcon />
+        </button>
       </div>
     </div>
     <div class="view-more tomorrow">
@@ -76,6 +88,7 @@ const todayMood = computed(() => {
     </div>
   </div>
   <CalendarWeek />
+  <AddNoteModal v-if="isModalOpen" :isModalOpen="isModalOpen" :todayRecord="todayMood" @hide-modal="closeModal" />
 </template>
 
 <style scoped>
@@ -108,11 +121,11 @@ button.good:hover {
 }
 
 button.awful {
-  border-color: #fc3f21;
+  border-color: #eb6862;
 }
 
 button.awful:hover {
-  background: #fc3f21;
+  background: #eb6862;
 }
 
 .today-mood {
@@ -145,8 +158,8 @@ button.awful:hover {
 }
 
 .day-card.red {
-  background: #fc3f21;
-  border-color: #fc3f21;
+  background: #eb6862;
+  border-color: #eb6862;
 }
 
 .view-more {
@@ -159,5 +172,22 @@ button.awful:hover {
   position: absolute;
   top: 0;
   width: 100%;
+}
+
+.note-button {
+  background: transparent;
+  padding: 0.4rem 0.6rem;
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+
+.note-button:hover,
+.note-button:focus {
+  color: #fbf7ff;
+}
+
+.note-button:focus {
+  outline-color: #fbf7ff;
 }
 </style>

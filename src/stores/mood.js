@@ -16,12 +16,14 @@ export const useCalendarStore = defineStore({
     totalRecords: useStorage('recordList', [
       {
         date: dayjs('2023-01-31 14:00').format('YYYY-MM-DD HH:mm'),
-        timestamp: 1675187861.045,
         difference: null,
-        mood: 'Good'
+        memory: 'I am tired, ahahah',
+        mood: 'Good',
+        timestamp: 1675187861.045
       }
     ]),
-    calendar: useStorage('dayList', [])
+    calendar: useStorage('dayList', []),
+    memoryCards: useStorage('cardList', [])
   }),
   actions: {
     setTodayMood(date, timestamp, mood) {
@@ -46,6 +48,20 @@ export const useCalendarStore = defineStore({
       this.calendar = [
         ...recordsBeforeToday,
         todayRecords[todayRecords.length - 1]
+      ]
+    },
+    setTodayMemory(todayRecord, note) {
+      this.memoryCards = [
+        this.calendar.map((record) => {
+          if (record.date === todayRecord.date) {
+            record = {
+              ...record,
+              memory: note
+            }
+            return record
+          }
+          return record
+        })
       ]
     }
   },

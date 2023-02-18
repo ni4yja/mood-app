@@ -12,6 +12,19 @@ const calendarStore = useCalendarStore()
 
 const label = computed(() => dayjs(props.day.date).format('DD.MM.'))
 
+const memory = computed(() => {
+  let memoryRecord
+  calendarStore.memoryCards.map((card) => {
+    if (
+      dayjs(card.date).format('dddd, D MMM YYYY') ===
+      dayjs(props.day.date).format('dddd, D MMM YYYY')
+    ) {
+      memoryRecord = card.memory
+    }
+  })
+  return memoryRecord
+})
+
 const moodPerDay = computed(() => {
   let mood
   calendarStore.daysWithMoodColor.map((record) => {
@@ -36,6 +49,7 @@ const dayClasses = computed(() => ({
 <template>
   <li class="calendar-day" :class="dayClasses">
     <span>{{ label }}</span>
+    <code>{{ memory }}</code>
   </li>
 </template>
 
@@ -65,6 +79,6 @@ const dayClasses = computed(() => ({
 }
 
 .calendar-day--awful {
-  background: #fc3f21;
+  background: #eb6862;
 }
 </style>

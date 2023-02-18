@@ -73,7 +73,7 @@ button {
 
 button:focus,
 button:focus-visible {
-  outline: 4px auto #1a1a1a;
+  outline: 4px auto #474554;
 }
 
 .card {
