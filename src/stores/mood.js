@@ -17,7 +17,8 @@ export const useCalendarStore = defineStore({
       {
         date: dayjs('2023-01-31 14:00').format('YYYY-MM-DD HH:mm'),
         difference: null,
-        memory: 'I am tired, ahahah',
+        memory:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
         mood: 'Good',
         timestamp: 1675187861.045
       }
