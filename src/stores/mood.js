@@ -21,6 +21,13 @@ export const useCalendarStore = defineStore({
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
         mood: 'Good',
         timestamp: 1675187861.045
+      },
+      {
+        date: dayjs('2023-02-23 14:00').format('YYYY-MM-DD HH:mm'),
+        difference: null,
+        memory: 'What should I do',
+        mood: 'Awful',
+        timestamp: 1677165970.045
       }
     ]),
     calendar: useStorage('dayList', [])
@@ -36,7 +43,8 @@ export const useCalendarStore = defineStore({
       let uniqueRecordsSet = new Set().add(dataSet)
       const record = [...uniqueRecordsSet.keys()]
       this.totalRecords = [...this.totalRecords, record[0]]
-
+    },
+    setCalendar() {
       const recordsWithUniqueTimestamp = countRecordsWithUniqueTimestamp(
         this.totalRecords
       )
@@ -46,22 +54,16 @@ export const useCalendarStore = defineStore({
       const recordsBeforeToday = countRecordsBeforeToday(recordsWithDifference)
       const todayRecords = countTodayRecords(recordsWithDifference)
 
-      this.calendar = [
-        ...recordsBeforeToday,
-        todayRecords[todayRecords.length - 1]
-      ]
+      if (todayRecords.length) {
+        this.calendar = [
+          ...recordsBeforeToday,
+          todayRecords[todayRecords.length - 1]
+        ]
+      } else {
+        this.calendar = [...recordsBeforeToday]
+      }
     },
-    setMemories(todayRecord, note) {
-      this.calendar = this.calendar.map((record) => {
-        if (record.timestamp === todayRecord.timestamp) {
-          record = {
-            ...record,
-            memory: note
-          }
-        }
-        return record
-      })
-    }
+    setMemories(todayRecord, note) {}
   },
   getters: {
     daysWithMoodColor(state) {
