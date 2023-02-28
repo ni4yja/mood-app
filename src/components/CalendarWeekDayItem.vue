@@ -82,6 +82,7 @@ const toggleMemory = () => {
   position: relative;
   min-height: 50px;
   min-width: 210px;
+  border: 2px solid transparent;
   padding: 5px;
   display: flex;
   justify-content: center;
@@ -220,7 +221,7 @@ const toggleMemory = () => {
   }
 
   .calendar-day--slide-down .memory-card {
-    top: auto;
+    top: -2px;
     bottom: auto;
   }
 

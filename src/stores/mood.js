@@ -63,7 +63,18 @@ export const useCalendarStore = defineStore({
         this.calendar = [...recordsBeforeToday]
       }
     },
-    setMemories(todayRecord, note) {}
+    setMemories(todayRecord, note) {
+      this.totalRecords = this.totalRecords.map((day) => {
+        if (day.timestamp === todayRecord.timestamp) {
+          day = {
+            ...day,
+            memory: note
+          }
+        }
+        return day
+      })
+      this.setCalendar()
+    }
   },
   getters: {
     daysWithMoodColor(state) {
