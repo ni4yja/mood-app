@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import dayjs from 'dayjs/esm/index.js'
 import relativeTime from 'dayjs/esm/index.js'
 import { useCalendarStore } from './stores/mood'
@@ -15,13 +15,12 @@ const today = ref(dayjs())
 const timestamp = new Date().getTime(today.value) / 1000
 
 const formattedDates = ref({
-  today: dayjs().format('dddd, D MMM YYYY'),
-  yesterday: dayjs().subtract(1, 'days').format('dddd, D MMM YYYY'),
-  tomorrow: dayjs().add(1, 'days').format('dddd, D MMM YYYY')
+  today: dayjs().format('dddd, D MMM YYYY')
 })
 
-const setMoodStats = (date, timestamp, mood) => {
-  calendarStore.setTodayMood(date, timestamp, mood)
+const setMoodStats = (date, timestamp, mood, memory) => {
+  calendarStore.setTodayMood(date, timestamp, mood, memory)
+  calendarStore.setCalendar()
 }
 
 const todayMood = computed(() => {
@@ -46,54 +45,56 @@ const openModal = () => {
 const closeModal = () => {
   isModalOpen.value = false
 }
+
+onMounted(() => {
+  calendarStore.setCalendar()
+})
 </script>
 
 <template>
   <h1>How do you feel today?</h1>
   <div class="mood-options">
-    <button class="excellent" @click="setMoodStats(today, timestamp, 'Excellent')">
+    <button
+      class="excellent"
+      @click="setMoodStats(today, timestamp, 'Excellent', '')"
+    >
       Excellent
     </button>
-    <button class="good" @click="setMoodStats(today, timestamp, 'Good')">
+    <button class="good" @click="setMoodStats(today, timestamp, 'Good', '')">
       Good
     </button>
-    <button class="awful" @click="setMoodStats(today, timestamp, 'Awful')">
+    <button class="awful" @click="setMoodStats(today, timestamp, 'Awful', '')">
       Awful
     </button>
   </div>
-  <div class="today-mood">
-    <div class="view-more yesterday">
-      <div class="day-title">
-        <h3>Yesterday</h3>
-        <p>{{ formattedDates.yesterday }}</p>
-      </div>
+  <div class="day-card today" :class="todayMood?.color">
+    <div class="day-title">
+      <h3>Today</h3>
+      <p>{{ formattedDates.today }}</p>
     </div>
-    <div class="day-card today" :class="todayMood?.color">
-      <div class="day-title">
-        <h3>Today</h3>
-        <p>{{ formattedDates.today }}</p>
-      </div>
-      <div class="card-content">
-        <h2>{{ todayMood?.mood }}</h2>
-        <button v-if="todayMood?.mood" title="Add a Note" class="note-button" @click="openModal()">
-          <AddNoteIcon />
-        </button>
-      </div>
-    </div>
-    <div class="view-more tomorrow">
-      <div class="day-title">
-        <h3>Tomorrow</h3>
-        <p>{{ formattedDates.tomorrow }}</p>
-      </div>
+    <div class="card-content">
+      <h2>{{ todayMood?.mood }}</h2>
+      <button
+        v-if="todayMood?.mood"
+        title="Add a Note"
+        class="note-button"
+        @click="openModal()"
+      >
+        <AddNoteIcon />
+      </button>
     </div>
   </div>
   <CalendarWeek />
-  <AddNoteModal v-if="isModalOpen" :isModalOpen="isModalOpen" :todayRecord="todayMood" @hide-modal="closeModal" />
+  <AddNoteModal
+    v-if="isModalOpen"
+    :isModalOpen="isModalOpen"
+    :todayRecord="todayMood"
+    @hide-modal="closeModal"
+  />
 </template>
 
 <style scoped>
 .mood-options {
-  max-width: 40%;
   margin: 0 auto 2rem;
   display: flex;
   justify-content: space-around;
@@ -128,14 +129,7 @@ button.awful:hover {
   background: #eb6862;
 }
 
-.today-mood {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .day-card {
-  min-width: 20rem;
   min-height: 20rem;
   margin: 1rem;
   background-color: #f9f9f9;
@@ -189,5 +183,16 @@ button.awful:hover {
 
 .note-button:focus {
   outline-color: #fbf7ff;
+}
+
+@media (min-width: 768px) {
+  .mood-options {
+    max-width: 40%;
+  }
+
+  .day-card {
+    max-width: 20rem;
+    margin: 0 auto;
+  }
 }
 </style>

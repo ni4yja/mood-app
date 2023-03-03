@@ -26,17 +26,22 @@ const selectNext = () => {
 
 <template>
   <div class="calendar-date-selector">
-    <button @click="selectPrevious">Previous Week</button>
+    <button @click="selectPrevious">Prev</button>
     <button @click="selectCurrent">Today</button>
-    <button @click="selectNext">Next Week</button>
+    <button @click="selectNext">Next</button>
   </div>
 </template>
 
 <style>
 .calendar-date-selector {
-  max-width: 40%;
   margin: 1rem auto;
   display: flex;
   justify-content: space-around;
+}
+
+@media (min-width: 768px) {
+  .calendar-date-selector {
+    max-width: 40%;
+  }
 }
 </style>

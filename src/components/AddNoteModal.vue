@@ -23,7 +23,7 @@ const closeModal = () => {
 
 const addNote = (note) => {
   if (note.length) {
-    calendarStore.setTodayMemory(props.todayRecord, note)
+    calendarStore.setMemories(props.todayRecord, note)
   }
 }
 </script>

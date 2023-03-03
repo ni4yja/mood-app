@@ -31,7 +31,7 @@ const today = computed(() => dayjs().format('YYYY-MM-DD'))
 </script>
 
 <template>
-  <h3>See your week stats</h3>
+  <h3>See your weekly stats</h3>
   <div class="calendar-week">
     <div class="calendar-week-header">
       <CalendarDateIndicator :selected-date="selectedDate" />
@@ -41,7 +41,9 @@ const today = computed(() => dayjs().format('YYYY-MM-DD'))
         @dateSelected="selectDate"
       />
     </div>
-    <CalendarWeekdays />
+    <div class="weekdays-grid">
+      <CalendarWeekdays />
+    </div>
     <ol class="days-grid">
       <CalendarWeekDayItem
         v-for="day in weekdays"
@@ -54,9 +56,36 @@ const today = computed(() => dayjs().format('YYYY-MM-DD'))
 </template>
 
 <style>
-.days-grid {
-  list-style: none;
+.calendar-week {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-areas:
+    'head head head'
+    'weekdays days days'
+    'weekdays days days';
+}
+
+.calendar-week > .calendar-week-header {
+  grid-area: head;
+}
+
+.calendar-week > .weekdays-grid {
+  grid-area: weekdays;
+}
+
+.calendar-week > .days-grid {
+  list-style: none;
+  padding: 0;
+  grid-area: days;
+  display: grid;
+}
+
+@media (min-width: 768px) {
+  .calendar-week {
+    display: block;
+  }
+
+  .days-grid {
+    grid-template-columns: repeat(7, 1fr);
+  }
 }
 </style>

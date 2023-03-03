@@ -14,11 +14,25 @@ const weekdays = computed(() => WEEKDAYS.value)
 <style scoped>
 .day-of-week {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
   list-style: none;
+  padding: 0;
 }
 
 .day-of-week > * {
-  text-align: center;
+  min-height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+
+@media (min-width: 768px) {
+  .day-of-week {
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  .day-of-week > * {
+    min-height: auto;
+  }
 }
 </style>

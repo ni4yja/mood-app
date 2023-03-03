@@ -17,25 +17,34 @@ export const useCalendarStore = defineStore({
       {
         date: dayjs('2023-01-31 14:00').format('YYYY-MM-DD HH:mm'),
         difference: null,
-        memory: 'I am tired, ahahah',
+        memory:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
         mood: 'Good',
         timestamp: 1675187861.045
+      },
+      {
+        date: dayjs('2023-02-23 14:00').format('YYYY-MM-DD HH:mm'),
+        difference: null,
+        memory: 'What should I do',
+        mood: 'Awful',
+        timestamp: 1677165970.045
       }
     ]),
-    calendar: useStorage('dayList', []),
-    memoryCards: useStorage('cardList', [])
+    calendar: useStorage('dayList', [])
   }),
   actions: {
-    setTodayMood(date, timestamp, mood) {
+    setTodayMood(date, timestamp, mood, memory) {
       const dataSet = {
         date: dayjs(date).format('YYYY-MM-DD HH:mm'),
         timestamp,
-        mood
+        mood,
+        memory
       }
       let uniqueRecordsSet = new Set().add(dataSet)
       const record = [...uniqueRecordsSet.keys()]
       this.totalRecords = [...this.totalRecords, record[0]]
-
+    },
+    setCalendar() {
       const recordsWithUniqueTimestamp = countRecordsWithUniqueTimestamp(
         this.totalRecords
       )
@@ -45,24 +54,26 @@ export const useCalendarStore = defineStore({
       const recordsBeforeToday = countRecordsBeforeToday(recordsWithDifference)
       const todayRecords = countTodayRecords(recordsWithDifference)
 
-      this.calendar = [
-        ...recordsBeforeToday,
-        todayRecords[todayRecords.length - 1]
-      ]
+      if (todayRecords.length) {
+        this.calendar = [
+          ...recordsBeforeToday,
+          todayRecords[todayRecords.length - 1]
+        ]
+      } else {
+        this.calendar = [...recordsBeforeToday]
+      }
     },
-    setTodayMemory(todayRecord, note) {
-      this.memoryCards = [
-        this.calendar.map((record) => {
-          if (record.date === todayRecord.date) {
-            record = {
-              ...record,
-              memory: note
-            }
-            return record
+    setMemories(todayRecord, note) {
+      this.totalRecords = this.totalRecords.map((day) => {
+        if (day.timestamp === todayRecord.timestamp) {
+          day = {
+            ...day,
+            memory: note
           }
-          return record
-        })
-      ]
+        }
+        return day
+      })
+      this.setCalendar()
     }
   },
   getters: {
