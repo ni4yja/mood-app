@@ -18,7 +18,7 @@ const weekdays = computed(() => WEEKDAYS.value)
   padding: 0;
 }
 
-.day-of-week>* {
+.day-of-week > * {
   min-height: 50px;
   display: flex;
   justify-content: center;
@@ -31,7 +31,7 @@ const weekdays = computed(() => WEEKDAYS.value)
     grid-template-columns: repeat(7, 1fr);
   }
 
-  .day-of-week>* {
+  .day-of-week > * {
     min-height: auto;
   }
 }

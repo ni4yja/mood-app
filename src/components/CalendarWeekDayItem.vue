@@ -33,38 +33,66 @@ const dayClasses = computed(() => ({
   'calendar-day--good': moodPerDay.value?.color === 'green',
   'calendar-day--awful': moodPerDay.value?.color === 'red',
   'calendar-day--extended': isMemoryVisible,
-  'calendar-day--slide-right calendar-day--slide-down': weekday.value === 'Mon' || weekday.value === 'Tue' || weekday.value === 'Wed' || weekday.value === 'Thu',
-  'calendar-day--slide-left calendar-day--slide-up': weekday.value === 'Fri' || weekday.value === 'Sat' || weekday.value === 'Sun'
+  'calendar-day--slide-right calendar-day--slide-down':
+    weekday.value === 'Mon' ||
+    weekday.value === 'Tue' ||
+    weekday.value === 'Wed' ||
+    weekday.value === 'Thu',
+  'calendar-day--slide-left calendar-day--slide-up':
+    weekday.value === 'Fri' ||
+    weekday.value === 'Sat' ||
+    weekday.value === 'Sun'
 }))
 
 const animationNames = computed(() => {
   if (window.innerWidth > 767) {
-    if (weekday.value === 'Mon' || weekday.value === 'Tue' || weekday.value === 'Wed' || weekday.value === 'Thu') {
+    if (
+      weekday.value === 'Mon' ||
+      weekday.value === 'Tue' ||
+      weekday.value === 'Wed' ||
+      weekday.value === 'Thu'
+    ) {
       return 'slide--right'
-    } else if (weekday.value === 'Fri' || weekday.value === 'Sat' || weekday.value === 'Sun') {
+    } else if (
+      weekday.value === 'Fri' ||
+      weekday.value === 'Sat' ||
+      weekday.value === 'Sun'
+    ) {
       return 'slide--left'
     }
   } else {
-    if (weekday.value === 'Mon' || weekday.value === 'Tue' || weekday.value === 'Wed' || weekday.value === 'Thu') {
+    if (
+      weekday.value === 'Mon' ||
+      weekday.value === 'Tue' ||
+      weekday.value === 'Wed' ||
+      weekday.value === 'Thu'
+    ) {
       return 'slide--down'
-    } else if (weekday.value === 'Fri' || weekday.value === 'Sat' || weekday.value === 'Sun') {
+    } else if (
+      weekday.value === 'Fri' ||
+      weekday.value === 'Sat' ||
+      weekday.value === 'Sun'
+    ) {
       return 'slide--up'
     }
   }
-}
-)
+})
 
 const isMemoryVisible = ref(false)
 
 const toggleMemory = () => {
   isMemoryVisible.value = !isMemoryVisible.value
 }
-
 </script>
 
 <template>
   <li class="calendar-day" :class="dayClasses">
-    <button v-if="moodPerDay?.memory" title="View Memory" class="view-btn" @click="toggleMemory">
+    <button
+      v-if="moodPerDay?.memory"
+      title="View Memory"
+      class="view-btn"
+      @click="toggleMemory"
+    >
       <MemoryIcon />
     </button>
     <span>{{ label }}</span>
@@ -81,7 +109,6 @@ const toggleMemory = () => {
   box-sizing: border-box;
   position: relative;
   min-height: 50px;
-  min-width: 210px;
   border: 2px solid transparent;
   padding: 5px;
   display: flex;
@@ -93,11 +120,6 @@ const toggleMemory = () => {
   padding-top: 4px;
   background-color: #f9f9f9;
   border: 2px solid #222362;
-  /* border-radius: 4px; */
-}
-
-.calendar-day--today.calendar-day--slide-left .memory-card {
-  border-right: 0;
 }
 
 .calendar-day--excellent {
@@ -126,12 +148,13 @@ const toggleMemory = () => {
 }
 
 .memory-card {
-  width: 100%;
   position: absolute;
   z-index: 10;
   box-sizing: border-box;
   background: inherit;
   border: 2px solid transparent;
+  left: -2px;
+  right: -2px;
 }
 
 .calendar-day--today .memory-card {
@@ -139,13 +162,11 @@ const toggleMemory = () => {
 }
 
 .calendar-day--slide-down .memory-card {
-  top: 50px;
+  top: 56px;
 }
 
 .calendar-day--slide-up .memory-card {
-  bottom: 50px;
-  left: 0;
-  right: 0;
+  bottom: 56px;
 }
 
 .memory-card p {

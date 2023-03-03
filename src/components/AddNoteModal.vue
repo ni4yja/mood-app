@@ -30,7 +30,11 @@ const addNote = (note) => {
 
 <template>
   <div class="modal" :class="{ shown: isModalOpen }">
-    <a class="modal-overlay close-btn" aria-label="Close" @click="closeModal()"></a>
+    <a
+      class="modal-overlay close-btn"
+      aria-label="Close"
+      @click="closeModal()"
+    ></a>
     <div class="modal-content">
       <div class="modal-header">
         <a class="close-btn" aria-label="Close" @click="closeModal()">
