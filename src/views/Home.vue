@@ -48,7 +48,6 @@ const closeModal = () => {
 }
 
 onMounted(() => {
-  console.log(timestamp)
   calendarStore.setCalendar()
 })
 </script>
@@ -88,7 +87,7 @@ onMounted(() => {
         <h3 class="view-stats">See more stats</h3>
       </router-link>
     </div>
-    <div class="sidebar">ahahahahahahahahah</div>
+    <div class="sidebar">This is sidebar</div>
   </div>
 </template>
 
@@ -190,7 +189,11 @@ button.awful:hover {
 
 @media (min-width: 768px) {
   .mood-options {
-    max-width: 40%;
+    justify-content: center;
+  }
+
+  .mood-options button {
+    margin: 0 1rem;
   }
 
   .day-card {

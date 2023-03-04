@@ -90,18 +90,19 @@ button:focus-visible {
 }
 
 .main-container {
-  width: 100%;
-  padding: 2rem 2rem 9rem 2rem;
+  padding: 2rem 2rem 8rem 2rem;
   text-align: center;
-}
-
-.sidebar {
-  background-color: aliceblue;
 }
 
 @media (min-width: 768px) {
   .main-container {
-    padding: 2rem 2rem 2rem 9rem;
+    padding: 2rem 2rem 2rem 8rem;
+  }
+
+  .sidebar {
+    width: 30%;
+    box-shadow: inset 1px 0px 1px #f3f3f4;
+    min-height: 100vh;
   }
 }
 
@@ -110,8 +111,8 @@ button:focus-visible {
     flex-direction: row;
   }
 
-  .sidebar {
-    width: 30%;
+  .main-container {
+    width: 100%;
   }
 }
 
