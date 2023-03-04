@@ -33,7 +33,7 @@ const props = defineProps({
 
 <style>
 .day-card-stats {
-  width: 30%;
+  width: 100%;
   border: 1px solid #f3f3f4;
   border-radius: 1rem;
   text-align: center;

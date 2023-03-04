@@ -97,15 +97,74 @@ button:focus-visible {
   text-align: center;
 }
 
+.stats .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 @media (min-width: 768px) {
   .main-container {
-    padding: 2rem 2rem 2rem 8rem;
+    padding: 3rem 3rem 3rem 9rem;
   }
 
   .sidebar {
     width: 30%;
     box-shadow: inset 1px 0px 1px #f3f3f4;
     min-height: 100vh;
+  }
+
+  .stats .main-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto auto;
+    gap: 3rem 2rem;
+    grid-template-areas:
+      'header header header'
+      'card-one card-two card-three'
+      'switcher switcher switcher'
+      'chart chart empty';
+  }
+
+  .stats .main-container .header {
+    grid-area: header;
+  }
+
+  .stats .main-container .day-card-stats:first-child {
+    grid-area: card-one;
+  }
+
+  .stats .main-container .day-card-stats:nth-child(2) {
+    grid-area: card-two;
+  }
+
+  .stats .main-container .day-card-stats:last-child {
+    grid-area: card-three;
+  }
+
+  .stats .main-container .calendar-week {
+    grid-area: switcher;
+    width: 100%;
+    max-width: initial;
+  }
+
+  .stats .main-container .chart {
+    grid-area: chart;
+    background: #f9f9f9;
+    border-radius: 1rem;
+  }
+
+  .stats .main-container .empty {
+    grid-area: empty;
+  }
+
+  .stats .main-container .calendar-date-selector button {
+    background: none;
+    border-color: #646cff;
+  }
+
+  .stats .main-container .calendar-date-selector button:nth-child(2) {
+    margin: 0 1rem;
   }
 }
 

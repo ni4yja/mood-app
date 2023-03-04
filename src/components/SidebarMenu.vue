@@ -68,19 +68,5 @@ import StatsIcon from './icons/StatsIcon.vue'
   .sidebar-menu-container li {
     margin: 1rem 0;
   }
-
-  .sidebar-menu-container a:after {
-    content: '';
-    position: absolute;
-    width: 2px;
-    height: 100%;
-    background: transparent;
-    right: -1.2rem;
-    top: 0;
-  }
-
-  .sidebar-menu-container a.router-link-exact-active:after {
-    background: #646cff;
-  }
 }
 </style>

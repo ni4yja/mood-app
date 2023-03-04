@@ -34,14 +34,14 @@ const selectNext = () => {
 </template>
 
 <style>
-.calendar-date-selector {
+.home .calendar-date-selector {
   margin: 1rem auto;
   display: flex;
   justify-content: space-around;
 }
 
 @media (min-width: 768px) {
-  .calendar-date-selector {
+  .home .calendar-date-selector {
     max-width: 40%;
   }
 }

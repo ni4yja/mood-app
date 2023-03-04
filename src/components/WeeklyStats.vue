@@ -67,30 +67,22 @@ const series = computed(() => [
 </script>
 
 <template>
-  <div class="stats-in-days">
-    <DayCardStats :mood="'Excellent'" :count="daysWithExcellentMood" />
-    <DayCardStats :mood="'Good'" :count="daysWithGoodMood" />
-    <DayCardStats :mood="'Awful'" :count="daysWithAwfulMood" />
-  </div>
+  <DayCardStats :mood="'Excellent'" :count="daysWithExcellentMood" />
+  <DayCardStats :mood="'Good'" :count="daysWithGoodMood" />
+  <DayCardStats :mood="'Awful'" :count="daysWithAwfulMood" />
   <div class="calendar-week">
     <div class="calendar-week-header">
-      <CalendarDateIndicator :selected-date="selectedDate" />
+      <CalendarDateIndicator :selected-date="selectedDate" :period-to-show="'week'" />
       <CalendarDateSelector :current-date="today" :selected-date="selectedDate" :period-to-change="'week'"
         @dateSelected="selectDate" />
     </div>
   </div>
-  <div id="chart">
+  <div id="chart" class="chart">
     <apexchart type="pie" width="380" :options="chartOptions" :series="series"></apexchart>
   </div>
 </template>
 
 <style>
-.stats-in-days {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 2rem;
-}
-
 .calendar-week {
   display: grid;
   grid-template-areas:
@@ -112,12 +104,6 @@ const series = computed(() => [
   padding: 0;
   grid-area: days;
   display: grid;
-}
-
-.vue-apexcharts {
-  margin-top: 3rem;
-  display: flex;
-  justify-content: center;
 }
 
 @media (min-width: 768px) {

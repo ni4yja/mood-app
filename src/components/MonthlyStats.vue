@@ -34,15 +34,15 @@ const monthDays = computed(() =>
 const today = computed(() => dayjs().format('YYYY-MM-DD'))
 
 const daysWithExcellentMood = computed(() => {
-  return countDaysWithMood(weekdays.value, calendarStore.calendar, 'Excellent')
+  return countDaysWithMood(monthDays.value, calendarStore.calendar, 'Excellent')
 })
 
 const daysWithGoodMood = computed(() => {
-  return countDaysWithMood(weekdays.value, calendarStore.calendar, 'Good')
+  return countDaysWithMood(monthDays.value, calendarStore.calendar, 'Good')
 })
 
 const daysWithAwfulMood = computed(() => {
-  return countDaysWithMood(weekdays.value, calendarStore.calendar, 'Awful')
+  return countDaysWithMood(monthDays.value, calendarStore.calendar, 'Awful')
 })
 
 const chartOptions = ref({
@@ -55,44 +55,35 @@ const chartOptions = ref({
 })
 
 const series = computed(() => [
-  daysWithExcellentMood.value * 0.07,
-  daysWithGoodMood.value * 0.07,
-  daysWithAwfulMood.value * 0.07,
+  daysWithExcellentMood.value * monthDays.value.length / 100,
+  daysWithGoodMood.value * monthDays.value.length / 100,
+  daysWithAwfulMood.value * monthDays.value.length / 100,
   (7 -
     daysWithExcellentMood.value -
     daysWithGoodMood.value -
     daysWithAwfulMood.value) *
-  0.07
+  monthDays.value.length / 100
 ])
 </script>
 
 <template>
-  <!-- {{ startOfMonth }} -->
-  {{ monthDays }}
-  <!-- <div class="stats-in-days">
-                  <DayCardStats :mood="'Excellent'" :count="daysWithExcellentMood" />
-                  <DayCardStats :mood="'Good'" :count="daysWithGoodMood" />
-                  <DayCardStats :mood="'Awful'" :count="daysWithAwfulMood" />
-                </div> -->
+  <DayCardStats :mood="'Excellent'" :count="daysWithExcellentMood" />
+  <DayCardStats :mood="'Good'" :count="daysWithGoodMood" />
+  <DayCardStats :mood="'Awful'" :count="daysWithAwfulMood" />
   <div class="calendar-week">
     <div class="calendar-week-header">
-      <CalendarDateIndicator :selected-date="selectedDate" />
+      <CalendarDateIndicator :selected-date="selectedDate" :period-to-show="'month'" />
       <CalendarDateSelector :current-date="today" :selected-date="selectedDate" :period-to-change="'month'"
         @dateSelected="selectDate" />
     </div>
   </div>
-  <!-- <div id="chart">
-                  <apexchart type="pie" width="380" :options="chartOptions" :series="series"></apexchart>
-                </div> -->
+  <div class="chart" id="chart">
+    <apexchart type="pie" width="380" :options="chartOptions" :series="series"></apexchart>
+  </div>
+  <div class="emty"></div>
 </template>
 
 <style>
-.stats-in-days {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 2rem;
-}
-
 .calendar-week {
   display: grid;
   grid-template-areas:
@@ -114,12 +105,6 @@ const series = computed(() => [
   padding: 0;
   grid-area: days;
   display: grid;
-}
-
-.vue-apexcharts {
-  margin-top: 3rem;
-  display: flex;
-  justify-content: center;
 }
 
 @media (min-width: 768px) {

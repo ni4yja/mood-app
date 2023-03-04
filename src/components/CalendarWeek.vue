@@ -33,8 +33,9 @@ const today = computed(() => dayjs().format('YYYY-MM-DD'))
 <template>
   <div class="calendar-week">
     <div class="calendar-week-header">
-      <CalendarDateIndicator :selected-date="selectedDate" />
-      <CalendarDateSelector :current-date="today" :selected-date="selectedDate" @dateSelected="selectDate" />
+      <CalendarDateIndicator :selected-date="selectedDate" :period-to-show="'week'" />
+      <CalendarDateSelector :current-date="today" :selected-date="selectedDate" :period-to-change="'week'" @dateSelected="
+        selectDate" />
     </div>
     <div class="weekdays-grid">
       <CalendarWeekdays />

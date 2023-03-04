@@ -1,12 +1,13 @@
 import dayjs from 'dayjs/esm/index.js'
 
 export default function () {
-  const countDaysWithMood = (selectedWeek, calendarRecords, mood) => {
+  const countDaysWithMood = (selectedPeriod, calendarRecords, mood) => {
     let dayList = []
-    selectedWeek.map((dayOfSelectedWeek) => {
+    selectedPeriod.map((dayOfSelectedPeriod) => {
       calendarRecords.forEach((dayRecord) => {
         if (
-          dayOfSelectedWeek.date === dayjs(dayRecord.date).format('YYYY-MM-DD')
+          dayOfSelectedPeriod.date ===
+          dayjs(dayRecord.date).format('YYYY-MM-DD')
         ) {
           dayList.push(dayRecord)
         }

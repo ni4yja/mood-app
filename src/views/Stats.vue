@@ -29,12 +29,6 @@ const toggleSwitcher = () => isWeeklyStatsShown.value = !isWeeklyStatsShown.valu
 </template>
 
 <style scoped>
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .switch {
   position: relative;
   display: inline-block;
