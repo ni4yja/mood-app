@@ -6,6 +6,7 @@ import CalendarDateIndicator from './CalendarDateIndicator.vue'
 import CalendarDateSelector from './CalendarDateSelector.vue'
 import { useCalendarStore } from '../stores/mood.js'
 import useMoodCounter from '../helpers/days-with-mood-counter.js'
+import DayCardStats from './DayCardStats.vue'
 
 const calendarStore = useCalendarStore()
 const { countDaysWithMood } = useMoodCounter()
@@ -66,6 +67,11 @@ const series = computed(() => [
 </script>
 
 <template>
+  <div class="stats-in-days">
+    <DayCardStats :mood="'Excellent'" :count="daysWithExcellentMood" />
+    <DayCardStats :mood="'Good'" :count="daysWithGoodMood" />
+    <DayCardStats :mood="'Awful'" :count="daysWithAwfulMood" />
+  </div>
   <div class="calendar-week">
     <div class="calendar-week-header">
       <CalendarDateIndicator :selected-date="selectedDate" />
@@ -78,6 +84,11 @@ const series = computed(() => [
 </template>
 
 <style>
+.stats-in-days {
+  display: flex;
+  margin-bottom: 2rem;
+}
+
 .calendar-week {
   display: grid;
   grid-template-areas:
