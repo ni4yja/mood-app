@@ -72,6 +72,8 @@ const today = computed(() => dayjs().format('YYYY-MM-DD'))
 @media (min-width: 768px) {
   .calendar-week {
     display: block;
+    max-width: 770px;
+    margin: 0 auto;
   }
 
   .days-grid {

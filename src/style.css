@@ -84,14 +84,34 @@ button:focus-visible {
   width: 100%;
 }
 
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .main-container {
+  width: 100%;
   padding: 2rem 2rem 9rem 2rem;
   text-align: center;
+}
+
+.sidebar {
+  background-color: aliceblue;
 }
 
 @media (min-width: 768px) {
   .main-container {
     padding: 2rem 2rem 2rem 9rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-wrapper {
+    flex-direction: row;
+  }
+
+  .sidebar {
+    width: 30%;
   }
 }
 

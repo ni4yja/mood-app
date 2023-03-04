@@ -48,12 +48,13 @@ const closeModal = () => {
 }
 
 onMounted(() => {
+  console.log(timestamp)
   calendarStore.setCalendar()
 })
 </script>
 
 <template>
-  <div class="home-page">
+  <div class="page-wrapper home">
     <SidebarMenu />
     <div class="main-container">
       <h1>How do you feel today?</h1>
@@ -92,15 +93,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.home-page {
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar {
-  background-color: aliceblue;
-}
-
 .mood-options {
   margin: 0 auto 2rem;
   display: flex;
@@ -197,10 +189,6 @@ button.awful:hover {
 }
 
 @media (min-width: 768px) {
-  .home-page {
-    flex-direction: row;
-  }
-
   .mood-options {
     max-width: 40%;
   }

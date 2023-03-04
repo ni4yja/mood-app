@@ -15,19 +15,22 @@ export const useCalendarStore = defineStore({
   state: () => ({
     totalRecords: useStorage('recordList', [
       {
-        date: dayjs('2023-01-31 14:00').format('YYYY-MM-DD HH:mm'),
-        difference: null,
-        memory:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
+        date: dayjs('2023-03-01 09:44').format('YYYY-MM-DD HH:mm'),
+        memory: 'Check this',
         mood: 'Good',
-        timestamp: 1675187861.045
+        timestamp: 1677656669.045
       },
       {
-        date: dayjs('2023-02-23 14:00').format('YYYY-MM-DD HH:mm'),
-        difference: null,
+        date: dayjs('2023-03-02 09:44').format('YYYY-MM-DD HH:mm'),
         memory: 'What should I do',
         mood: 'Awful',
         timestamp: 1677165970.045
+      },
+      {
+        date: dayjs('2023-03-03 14:00').format('YYYY-MM-DD HH:mm'),
+        memory: 'Friday I am in love',
+        mood: 'Excellent',
+        timestamp: 1677844800.045
       }
     ]),
     calendar: useStorage('dayList', [])
