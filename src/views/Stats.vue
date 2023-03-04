@@ -1,8 +1,8 @@
 <script setup>
-import CalendarWeek from '../components/CalendarWeek.vue'
+import WeeklyStats from '../components/WeeklyStats.vue'
 </script>
 
 <template>
-  <h1>Your weekly stats</h1>
-  <CalendarWeek />
+  <h1>See your stats</h1>
+  <WeeklyStats />
 </template>

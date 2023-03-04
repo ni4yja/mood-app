@@ -5,6 +5,8 @@ import relativeTime from 'dayjs/esm/index.js'
 import { useCalendarStore } from '../stores/mood'
 import AddNoteIcon from '../components/icons/AddNoteIcon.vue'
 import AddNoteModal from '../components/AddNoteModal.vue'
+import CalendarWeek from '../components/CalendarWeek.vue'
+import SidebarMenu from '../components/SidebarMenu.vue'
 
 const calendarStore = useCalendarStore()
 
@@ -51,50 +53,54 @@ onMounted(() => {
 </script>
 
 <template>
-  <h1>How do you feel today?</h1>
-  <div class="mood-options">
-    <button
-      class="excellent"
-      @click="setMoodStats(today, timestamp, 'Excellent', '')"
-    >
-      Excellent
-    </button>
-    <button class="good" @click="setMoodStats(today, timestamp, 'Good', '')">
-      Good
-    </button>
-    <button class="awful" @click="setMoodStats(today, timestamp, 'Awful', '')">
-      Awful
-    </button>
-  </div>
-  <div class="day-card today" :class="todayMood?.color">
-    <div class="day-title">
-      <h3>Today</h3>
-      <p>{{ formattedDates.today }}</p>
+  <div class="home-page">
+    <SidebarMenu />
+    <div class="main-container">
+      <h1>How do you feel today?</h1>
+      <div class="mood-options">
+        <button class="excellent" @click="setMoodStats(today, timestamp, 'Excellent', '')">
+          Excellent
+        </button>
+        <button class="good" @click="setMoodStats(today, timestamp, 'Good', '')">
+          Good
+        </button>
+        <button class="awful" @click="setMoodStats(today, timestamp, 'Awful', '')">
+          Awful
+        </button>
+      </div>
+      <div class="day-card today" :class="todayMood?.color">
+        <div class="day-title">
+          <h3>Today</h3>
+          <p>{{ formattedDates.today }}</p>
+        </div>
+        <div class="card-content">
+          <h2>{{ todayMood?.mood }}</h2>
+          <button v-if="todayMood?.mood" title="Add a Note" class="note-button" @click="openModal()">
+            <AddNoteIcon />
+          </button>
+        </div>
+      </div>
+      <AddNoteModal v-if="isModalOpen" :isModalOpen="isModalOpen" :todayRecord="todayMood" @hide-modal="closeModal" />
+      <h2>Your weekly stats:</h2>
+      <CalendarWeek />
+      <router-link to="/stats">
+        <h3 class="view-stats">See more stats</h3>
+      </router-link>
     </div>
-    <div class="card-content">
-      <h2>{{ todayMood?.mood }}</h2>
-      <button
-        v-if="todayMood?.mood"
-        title="Add a Note"
-        class="note-button"
-        @click="openModal()"
-      >
-        <AddNoteIcon />
-      </button>
-    </div>
+    <div class="sidebar">ahahahahahahahahah</div>
   </div>
-  <AddNoteModal
-    v-if="isModalOpen"
-    :isModalOpen="isModalOpen"
-    :todayRecord="todayMood"
-    @hide-modal="closeModal"
-  />
-  <router-link to="/stats">
-    <h3 class="view-stats">See your weekly stats</h3>
-  </router-link>
 </template>
 
 <style scoped>
+.home-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar {
+  background-color: aliceblue;
+}
+
 .mood-options {
   margin: 0 auto 2rem;
   display: flex;
@@ -191,8 +197,12 @@ button.awful:hover {
 }
 
 @media (min-width: 768px) {
+  .home-page {
+    flex-direction: row;
+  }
+
   .mood-options {
-    min-width: 40%;
+    max-width: 40%;
   }
 
   .day-card {
