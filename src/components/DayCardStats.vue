@@ -34,9 +34,9 @@ const props = defineProps({
 <style>
 .day-card-stats {
   width: 30%;
-  margin: 0 1rem;
   border: 1px solid #f3f3f4;
   border-radius: 1rem;
+  text-align: center;
 }
 
 .day-count h2 {

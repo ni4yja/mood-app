@@ -22,9 +22,9 @@ const selectDate = (newSelectedDate) => {
   selectedDate.value = newSelectedDate
 }
 
-const startOfWeek = computed(() => dayjs(selectedDate.value).startOf('week'))
-const weekdays = computed(() =>
-  [...Array(7)].fill(startOfWeek.value).map((day, index) => {
+const startOfMonth = computed(() => dayjs(selectedDate.value).startOf('month'))
+const monthDays = computed(() =>
+  [...Array(dayjs(selectedDate.value).daysInMonth())].fill(startOfMonth.value).map((day, index) => {
     return {
       date: day.add(index, 'day').format('YYYY-MM-DD')
     }
@@ -67,21 +67,23 @@ const series = computed(() => [
 </script>
 
 <template>
-  <div class="stats-in-days">
-    <DayCardStats :mood="'Excellent'" :count="daysWithExcellentMood" />
-    <DayCardStats :mood="'Good'" :count="daysWithGoodMood" />
-    <DayCardStats :mood="'Awful'" :count="daysWithAwfulMood" />
-  </div>
+  <!-- {{ startOfMonth }} -->
+  {{ monthDays }}
+  <!-- <div class="stats-in-days">
+                  <DayCardStats :mood="'Excellent'" :count="daysWithExcellentMood" />
+                  <DayCardStats :mood="'Good'" :count="daysWithGoodMood" />
+                  <DayCardStats :mood="'Awful'" :count="daysWithAwfulMood" />
+                </div> -->
   <div class="calendar-week">
     <div class="calendar-week-header">
       <CalendarDateIndicator :selected-date="selectedDate" />
-      <CalendarDateSelector :current-date="today" :selected-date="selectedDate" :period-to-change="'week'"
+      <CalendarDateSelector :current-date="today" :selected-date="selectedDate" :period-to-change="'month'"
         @dateSelected="selectDate" />
     </div>
   </div>
-  <div id="chart">
-    <apexchart type="pie" width="380" :options="chartOptions" :series="series"></apexchart>
-  </div>
+  <!-- <div id="chart">
+                  <apexchart type="pie" width="380" :options="chartOptions" :series="series"></apexchart>
+                </div> -->
 </template>
 
 <style>
