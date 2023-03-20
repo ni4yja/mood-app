@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import dayjs from 'dayjs/esm/index.js'
 import relativeTime from 'dayjs/esm/index.js'
 import { useCalendarStore } from '../stores/mood'
@@ -21,7 +21,6 @@ const formattedDates = ref({
 
 const setMoodStats = (date, timestamp, mood, memory) => {
   calendarStore.setTodayMood(date, timestamp, mood, memory)
-  calendarStore.setCalendar()
 }
 
 const todayMood = computed(() => {
@@ -46,10 +45,6 @@ const openModal = () => {
 const closeModal = () => {
   isModalOpen.value = false
 }
-
-onMounted(() => {
-  calendarStore.setCalendar()
-})
 </script>
 
 <template>
@@ -84,8 +79,8 @@ onMounted(() => {
       <!-- <h2>Your weekly stats:</h2> -->
       <CalendarWeek />
       <!-- <router-link to="/stats">
-            <h3 class="view-stats">See more stats</h3>
-          </router-link> -->
+                    <h3 class="view-stats">See more stats</h3>
+                  </router-link> -->
     </div>
     <div class="sidebar">This is sidebar</div>
   </div>
