@@ -24,16 +24,8 @@ const setMoodStats = (date, timestamp, mood, memory) => {
 }
 
 const todayMood = computed(() => {
-  const allDaysSorted = calendarStore.daysWithMoodColor.sort(
-    (dayOne, dayTwo) => {
-      dayTwo.timestamp - dayOne.timestamp
-    }
-  )
-  return dayjs(allDaysSorted[allDaysSorted.length - 1]?.date).format(
-    'dddd, D MMM YYYY'
-  ) === dayjs(today.value).format('dddd, D MMM YYYY')
-    ? allDaysSorted[allDaysSorted.length - 1]
-    : {}
+  const moodList = calendarStore.daysWithMoodColor.filter(day => dayjs(day.date).format('dddd, D MMM YYYY') === formattedDates.value.today)
+  return moodList.length ? moodList[moodList.length - 1] : {}
 })
 
 const isModalOpen = ref(false)
@@ -76,11 +68,7 @@ const closeModal = () => {
         </div>
       </div>
       <AddNoteModal v-if="isModalOpen" :isModalOpen="isModalOpen" :todayRecord="todayMood" @hide-modal="closeModal" />
-      <!-- <h2>Your weekly stats:</h2> -->
       <CalendarWeek />
-      <!-- <router-link to="/stats">
-                    <h3 class="view-stats">See more stats</h3>
-                  </router-link> -->
     </div>
     <div class="sidebar">This is sidebar</div>
   </div>

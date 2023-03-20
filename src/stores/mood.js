@@ -57,26 +57,26 @@ export const useCalendarStore = defineStore({
   },
   getters: {
     calendar(state) {
-      const moodMap = new Map()
-      state.totalRecords.forEach((data) => {
-        // Check if there is already a mood for this day
-        const existingMood = moodMap.get(data.timestamp)
-        if (!existingMood || existingMood.timestamp < data.timestamp) {
-          // If there is no mood for this day or the new mood is more recent,
-          // add it to the map
-          moodMap.set(data.timestamp, data)
+      const moodEventsMap = new Map()
+      // iterate over each mood event in the state.moodEvents array
+      state.totalRecords.forEach((record) => {
+        const dateStr = dayjs(record.date).format('YYYY-MM-DD')
+        const existingMoodEvent = moodEventsMap.get(dateStr)
+        // if a mood event for the current date already exists and has a later timestamp, ignore the new mood event
+        if (
+          existingMoodEvent &&
+          existingMoodEvent.timestamp >= record.timestamp
+        ) {
+          return
         }
+        // otherwise, update the map with the new mood event for the current date
+        moodEventsMap.set(dateStr, record)
       })
-
-      // Map the mood data to calendar events
-      return Array.from(moodMap.values()).map((data) => {
-        return {
-          date: data.date,
-          timestamp: data.timestamp,
-          mood: data.mood,
-          memory: data.memory
-        }
-      })
+      // convert the map to an array and sort by date
+      const moodEvents = [...moodEventsMap.values()].sort(
+        (a, b) => dayjs(b.date) - dayjs(a.date)
+      )
+      return moodEvents
     },
     daysWithMoodColor(getters) {
       const colorMap = {
