@@ -14,8 +14,8 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="day-card-stats">
-    <div class="mood-label" :class="mood.toLowerCase()">
+  <div class="day-card-stats" :class="mood.toLowerCase()">
+    <div class="mood-label">
       <p>
         <span class="mood-icon">
           <ExcellentMoodIcon v-if="mood === 'Excellent'" />

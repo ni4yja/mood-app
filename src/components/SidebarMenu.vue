@@ -31,14 +31,18 @@ import StatsIcon from './icons/StatsIcon.vue'
   width: 100%;
   background: #ffffff;
   z-index: 1000;
-
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .sidebar-menu-container ul {
   margin: 0;
   padding: 0;
   list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 }
 
 .sidebar-menu-container a {
@@ -63,6 +67,10 @@ import StatsIcon from './icons/StatsIcon.vue'
     flex-direction: column;
     justify-content: center;
     align-items: center;
+  }
+
+  .sidebar-menu-container ul {
+    display: initial;
   }
 
   .sidebar-menu-container li {

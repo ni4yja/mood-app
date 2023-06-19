@@ -47,11 +47,27 @@ const daysWithAwfulMood = computed(() => {
 
 const chartOptions = ref({
   chart: {
-    width: 380,
+    width: 400,
     type: 'pie'
   },
   labels: ['Excellent', 'Good', 'Awful', 'No mood'],
-  colors: ['#aea2f0', '#1bb476', '#eb6862', '#ADA9BB']
+  colors: ['#aea2f0', '#1bb476', '#eb6862', '#ADA9BB'],
+  legend: {
+    position: 'right'
+  },
+  responsive: [
+    {
+      breakpoint: 768,
+      options: {
+        chart: {
+          width: 320,
+        },
+        legend: {
+          position: 'bottom'
+        }
+      }
+    }
+  ]
 })
 
 const series = computed(() => [
@@ -78,7 +94,7 @@ const series = computed(() => [
     </div>
   </div>
   <div id="chart" class="chart">
-    <apexchart type="pie" width="380" :options="chartOptions" :series="series"></apexchart>
+    <apexchart type="pie" :options="chartOptions" :series="series"></apexchart>
   </div>
 </template>
 

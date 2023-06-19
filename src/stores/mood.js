@@ -34,14 +34,15 @@ export const useCalendarStore = defineStore({
   }),
   actions: {
     setTodayMood(date, timestamp, mood, memory) {
-      const dataSet = {
-        date: dayjs(date).format('YYYY-MM-DD HH:mm'),
-        timestamp,
-        mood,
-        memory
-      }
-      const uniqueRecordsArr = [...new Set([...this.totalRecords, dataSet])]
-      this.totalRecords = uniqueRecordsArr
+      this.totalRecords = [
+        {
+          date: dayjs(date).format('YYYY-MM-DD HH:mm'),
+          timestamp,
+          mood,
+          memory
+        },
+        ...this.totalRecords
+      ]
     },
     setMemories(todayRecord, note) {
       this.totalRecords = this.totalRecords.map((day) => {
