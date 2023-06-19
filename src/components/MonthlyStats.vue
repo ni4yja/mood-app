@@ -7,6 +7,7 @@ import CalendarDateSelector from './CalendarDateSelector.vue'
 import { useCalendarStore } from '../stores/mood.js'
 import useMoodCounter from '../helpers/days-with-mood-counter.js'
 import DayCardStats from './DayCardStats.vue'
+import { CHART_OPTIONS } from '../helpers/chart-options.js'
 
 const calendarStore = useCalendarStore()
 const { countDaysWithMood } = useMoodCounter()
@@ -45,31 +46,6 @@ const daysWithAwfulMood = computed(() => {
   return countDaysWithMood(monthDays.value, calendarStore.calendar, 'Awful')
 })
 
-const chartOptions = ref({
-  chart: {
-    width: 380,
-    type: 'pie'
-  },
-  labels: ['Excellent', 'Good', 'Awful', 'No mood'],
-  colors: ['#aea2f0', '#1bb476', '#eb6862', '#ADA9BB'],
-  legend: {
-    position: 'right'
-  },
-  responsive: [
-    {
-      breakpoint: 768,
-      options: {
-        chart: {
-          width: 320,
-        },
-        legend: {
-          position: 'bottom'
-        }
-      }
-    }
-  ]
-})
-
 const series = computed(() => [
   daysWithExcellentMood.value * monthDays.value.length / 100,
   daysWithGoodMood.value * monthDays.value.length / 100,
@@ -94,7 +70,7 @@ const series = computed(() => [
     </div>
   </div>
   <div class="chart" id="chart">
-    <apexchart type="pie" :width="380" :options="chartOptions" :series="series"></apexchart>
+    <apexchart type="pie" :width="380" :options="CHART_OPTIONS" :series="series"></apexchart>
   </div>
   <div class="emty"></div>
 </template>

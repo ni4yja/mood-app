@@ -108,6 +108,14 @@ button:focus-visible {
   border-color: #646cff;
 }
 
+.stats .main-container .empty {
+  background-color: #646cff;
+  color: #fff;
+  border-radius: 1rem;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
 @media (min-width: 768px) {
   .main-container {
     padding: 3rem 3rem 3rem 9rem;
@@ -162,10 +170,7 @@ button:focus-visible {
 
   .stats .main-container .empty {
     grid-area: empty;
-    background-color: #646cff;
-    color: #fff;
-    border-radius: 1rem;
-    padding: 2rem;
+    margin-top: 0;
   }
 }
 
