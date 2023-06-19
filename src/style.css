@@ -93,10 +93,6 @@ button:focus-visible {
   padding: 2rem 2rem 8rem 2rem;
 }
 
-.sidebar {
-  display: none;
-}
-
 .home .main-container {
   text-align: center;
 }
@@ -107,16 +103,14 @@ button:focus-visible {
   margin-bottom: 2rem;
 }
 
+.stats .main-container .calendar-date-selector button {
+  background: none;
+  border-color: #646cff;
+}
+
 @media (min-width: 768px) {
   .main-container {
     padding: 3rem 3rem 3rem 9rem;
-  }
-
-  .sidebar {
-    display: block;
-    width: 30%;
-    box-shadow: inset 1px 0px 1px #f3f3f4;
-    min-height: 100vh;
   }
 
   .stats .header {
@@ -168,15 +162,10 @@ button:focus-visible {
 
   .stats .main-container .empty {
     grid-area: empty;
-  }
-
-  .stats .main-container .calendar-date-selector button {
-    background: none;
-    border-color: #646cff;
-  }
-
-  .stats .main-container .calendar-date-selector button:nth-child(2) {
-    margin: 0 1rem;
+    background-color: #646cff;
+    color: #fff;
+    border-radius: 1rem;
+    padding: 2rem;
   }
 }
 

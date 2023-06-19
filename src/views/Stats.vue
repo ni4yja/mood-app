@@ -23,8 +23,8 @@ const toggleSwitcher = () => isWeeklyStatsShown.value = !isWeeklyStatsShown.valu
       </div>
       <WeeklyStats v-if="isWeeklyStatsShown" />
       <MonthlyStats v-if="!isWeeklyStatsShown" />
+      <div class="empty">Hello, darkness, my old friend 🦄</div>
     </div>
-    <div class="sidebar">This is sidebar</div>
   </div>
 </template>
 

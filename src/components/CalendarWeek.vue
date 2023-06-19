@@ -34,8 +34,8 @@ const today = computed(() => dayjs().format('YYYY-MM-DD'))
   <div class="calendar-week">
     <div class="calendar-week-header">
       <CalendarDateIndicator :selected-date="selectedDate" :period-to-show="'week'" />
-      <CalendarDateSelector :current-date="today" :selected-date="selectedDate" :period-to-change="'week'" @dateSelected="
-        selectDate" />
+      <CalendarDateSelector :current-date="today" :selected-date="selectedDate" :period-to-change="'week'"
+        @dateSelected="selectDate" />
     </div>
     <div class="weekdays-grid">
       <CalendarWeekdays />
@@ -57,6 +57,7 @@ const today = computed(() => dayjs().format('YYYY-MM-DD'))
 
 .calendar-week>.calendar-week-header {
   grid-area: head;
+  margin-bottom: 1rem;
 }
 
 .calendar-week>.weekdays-grid {
@@ -75,6 +76,10 @@ const today = computed(() => dayjs().format('YYYY-MM-DD'))
     display: block;
     max-width: 770px;
     margin: 0 auto;
+  }
+
+  .calendar-week>.calendar-week-header {
+    margin-bottom: 0;
   }
 
   .days-grid {

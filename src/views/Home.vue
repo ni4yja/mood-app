@@ -70,7 +70,6 @@ const closeModal = () => {
       <AddNoteModal v-if="isModalOpen" :isModalOpen="isModalOpen" :todayRecord="todayMood" @hide-modal="closeModal" />
       <CalendarWeek />
     </div>
-    <div class="sidebar">This is sidebar</div>
   </div>
 </template>
 
