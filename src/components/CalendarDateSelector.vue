@@ -3,13 +3,14 @@ import dayjs from 'dayjs/esm/index.js'
 
 const props = defineProps({
   currentDate: String,
-  selectedDate: Object
+  selectedDate: Object,
+  periodToChange: String,
 })
 
 const emit = defineEmits(['dateSelected'])
 
 const selectPrevious = () => {
-  let newSelectedDate = dayjs(props.selectedDate).subtract(1, 'week')
+  let newSelectedDate = dayjs(props.selectedDate).subtract(1, props.periodToChange)
   emit('dateSelected', newSelectedDate)
 }
 
@@ -19,7 +20,7 @@ const selectCurrent = () => {
 }
 
 const selectNext = () => {
-  let newSelectedDate = dayjs(props.selectedDate).add(1, 'week')
+  let newSelectedDate = dayjs(props.selectedDate).add(1, props.periodToChange)
   emit('dateSelected', newSelectedDate)
 }
 </script>
@@ -34,13 +35,16 @@ const selectNext = () => {
 
 <style>
 .calendar-date-selector {
-  margin: 1rem auto;
   display: flex;
-  justify-content: space-around;
+  gap: 1rem;
+}
+
+.home .calendar-date-selector {
+  justify-content: center;
 }
 
 @media (min-width: 768px) {
-  .calendar-date-selector {
+  .home .calendar-date-selector {
     max-width: 40%;
   }
 }

@@ -4,8 +4,13 @@ import en from 'dayjs/locale/en.js'
 import { ref, computed } from 'vue'
 import CalendarDateIndicator from './CalendarDateIndicator.vue'
 import CalendarDateSelector from './CalendarDateSelector.vue'
-import CalendarWeekdays from './CalendarWeekdays.vue'
-import CalendarWeekDayItem from './CalendarWeekDayItem.vue'
+import { useCalendarStore } from '../stores/mood.js'
+import useMoodCounter from '../helpers/days-with-mood-counter.js'
+import DayCardStats from './DayCardStats.vue'
+import { CHART_OPTIONS } from '../helpers/chart-options.js'
+
+const calendarStore = useCalendarStore()
+const { countDaysWithMood } = useMoodCounter()
 
 dayjs.locale({
   ...en,
@@ -28,21 +33,44 @@ const weekdays = computed(() =>
 )
 
 const today = computed(() => dayjs().format('YYYY-MM-DD'))
+
+const daysWithExcellentMood = computed(() => {
+  return countDaysWithMood(weekdays.value, calendarStore.calendar, 'Excellent')
+})
+
+const daysWithGoodMood = computed(() => {
+  return countDaysWithMood(weekdays.value, calendarStore.calendar, 'Good')
+})
+
+const daysWithAwfulMood = computed(() => {
+  return countDaysWithMood(weekdays.value, calendarStore.calendar, 'Awful')
+})
+
+const series = computed(() => [
+  daysWithExcellentMood.value * 0.07,
+  daysWithGoodMood.value * 0.07,
+  daysWithAwfulMood.value * 0.07,
+  (7 -
+    daysWithExcellentMood.value -
+    daysWithGoodMood.value -
+    daysWithAwfulMood.value) *
+  0.07
+])
 </script>
 
 <template>
+  <DayCardStats :mood="'Excellent'" :count="daysWithExcellentMood" />
+  <DayCardStats :mood="'Good'" :count="daysWithGoodMood" />
+  <DayCardStats :mood="'Awful'" :count="daysWithAwfulMood" />
   <div class="calendar-week">
     <div class="calendar-week-header">
       <CalendarDateIndicator :selected-date="selectedDate" :period-to-show="'week'" />
       <CalendarDateSelector :current-date="today" :selected-date="selectedDate" :period-to-change="'week'"
         @dateSelected="selectDate" />
     </div>
-    <div class="weekdays-grid">
-      <CalendarWeekdays />
-    </div>
-    <ol class="days-grid">
-      <CalendarWeekDayItem v-for="day in weekdays" :key="day.date" :day="day" :is-today="day.date === today" />
-    </ol>
+  </div>
+  <div id="chart" class="chart">
+    <apexchart type="pie" :width="380" :options="CHART_OPTIONS" :series="series"></apexchart>
   </div>
 </template>
 
@@ -57,7 +85,6 @@ const today = computed(() => dayjs().format('YYYY-MM-DD'))
 
 .calendar-week>.calendar-week-header {
   grid-area: head;
-  margin-bottom: 1rem;
 }
 
 .calendar-week>.weekdays-grid {
@@ -74,12 +101,6 @@ const today = computed(() => dayjs().format('YYYY-MM-DD'))
 @media (min-width: 768px) {
   .calendar-week {
     display: block;
-    max-width: 770px;
-    margin: 0 auto;
-  }
-
-  .calendar-week>.calendar-week-header {
-    margin-bottom: 0;
   }
 
   .days-grid {

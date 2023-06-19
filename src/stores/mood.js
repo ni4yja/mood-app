@@ -1,67 +1,48 @@
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
 import dayjs from 'dayjs/esm/index.js'
-import useCounters from '../helpers/store-counters.js'
-
-const {
-  countRecordsWithUniqueTimestamp,
-  countRecordsWithDifference,
-  countRecordsBeforeToday,
-  countTodayRecords
-} = useCounters()
 
 export const useCalendarStore = defineStore({
   id: 'main',
   state: () => ({
     totalRecords: useStorage('recordList', [
       {
-        date: dayjs('2023-01-31 14:00').format('YYYY-MM-DD HH:mm'),
-        difference: null,
-        memory:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
-        mood: 'Good',
-        timestamp: 1675187861.045
+        date: dayjs('2023-02-28 17:00').format('YYYY-MM-DD HH:mm'),
+        memory: 'Who owns my heart',
+        mood: 'Excellent',
+        timestamp: 1677596401.045
       },
       {
-        date: dayjs('2023-02-23 14:00').format('YYYY-MM-DD HH:mm'),
-        difference: null,
+        date: dayjs('2023-03-01 09:44').format('YYYY-MM-DD HH:mm'),
+        memory: 'Check this',
+        mood: 'Good',
+        timestamp: 1677656669.045
+      },
+      {
+        date: dayjs('2023-03-02 09:44').format('YYYY-MM-DD HH:mm'),
         memory: 'What should I do',
         mood: 'Awful',
         timestamp: 1677165970.045
+      },
+      {
+        date: dayjs('2023-03-03 14:00').format('YYYY-MM-DD HH:mm'),
+        memory: 'Friday I am in love',
+        mood: 'Excellent',
+        timestamp: 1677844800.045
       }
-    ]),
-    calendar: useStorage('dayList', [])
+    ])
   }),
   actions: {
     setTodayMood(date, timestamp, mood, memory) {
-      const dataSet = {
-        date: dayjs(date).format('YYYY-MM-DD HH:mm'),
-        timestamp,
-        mood,
-        memory
-      }
-      let uniqueRecordsSet = new Set().add(dataSet)
-      const record = [...uniqueRecordsSet.keys()]
-      this.totalRecords = [...this.totalRecords, record[0]]
-    },
-    setCalendar() {
-      const recordsWithUniqueTimestamp = countRecordsWithUniqueTimestamp(
-        this.totalRecords
-      )
-      const recordsWithDifference = countRecordsWithDifference(
-        recordsWithUniqueTimestamp
-      )
-      const recordsBeforeToday = countRecordsBeforeToday(recordsWithDifference)
-      const todayRecords = countTodayRecords(recordsWithDifference)
-
-      if (todayRecords.length) {
-        this.calendar = [
-          ...recordsBeforeToday,
-          todayRecords[todayRecords.length - 1]
-        ]
-      } else {
-        this.calendar = [...recordsBeforeToday]
-      }
+      this.totalRecords = [
+        {
+          date: dayjs(date).format('YYYY-MM-DD HH:mm'),
+          timestamp,
+          mood,
+          memory
+        },
+        ...this.totalRecords
+      ]
     },
     setMemories(todayRecord, note) {
       this.totalRecords = this.totalRecords.map((day) => {
@@ -73,35 +54,41 @@ export const useCalendarStore = defineStore({
         }
         return day
       })
-      this.setCalendar()
     }
   },
   getters: {
-    daysWithMoodColor(state) {
-      const days = [...state.calendar]
-      return days.map((day) => {
-        if (day.mood === 'Excellent') {
-          day = {
-            ...day,
-            color: 'purple'
-          }
-          return day
+    calendar(state) {
+      const moodEventsMap = new Map()
+      // iterate over each mood event in the state.moodEvents array
+      state.totalRecords.forEach((record) => {
+        const dateStr = dayjs(record.date).format('YYYY-MM-DD')
+        const existingMoodEvent = moodEventsMap.get(dateStr)
+        // if a mood event for the current date already exists and has a later timestamp, ignore the new mood event
+        if (
+          existingMoodEvent &&
+          existingMoodEvent.timestamp >= record.timestamp
+        ) {
+          return
         }
-        if (day.mood === 'Good') {
-          day = {
-            ...day,
-            color: 'green'
-          }
-          return day
-        }
-        if (day.mood === 'Awful') {
-          day = {
-            ...day,
-            color: 'red'
-          }
-          return day
-        }
+        // otherwise, update the map with the new mood event for the current date
+        moodEventsMap.set(dateStr, record)
       })
+      // convert the map to an array and sort by date
+      const moodEvents = [...moodEventsMap.values()].sort(
+        (a, b) => dayjs(b.date) - dayjs(a.date)
+      )
+      return moodEvents
+    },
+    daysWithMoodColor(getters) {
+      const colorMap = {
+        Excellent: 'purple',
+        Good: 'green',
+        Awful: 'red'
+      }
+      return getters.calendar.map((day) => ({
+        ...day,
+        color: colorMap[day.mood] || null
+      }))
     }
   }
 })
