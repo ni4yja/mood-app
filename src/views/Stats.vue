@@ -1,8 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import SidebarMenu from '../components/SidebarMenu.vue'
-import WeeklyStats from '../components/WeeklyStats.vue'
-import MonthlyStats from '../components/MonthlyStats.vue'
+import StatsByPeriod from '../components/StatsByPeriod.vue'
 
 const isWeeklyStatsShown = ref(true)
 
@@ -21,8 +20,8 @@ const toggleSwitcher = () => isWeeklyStatsShown.value = !isWeeklyStatsShown.valu
           <span class="labels" data-on="Weekly" data-off="Monthly"></span>
         </label>
       </div>
-      <WeeklyStats v-if="isWeeklyStatsShown" />
-      <MonthlyStats v-if="!isWeeklyStatsShown" />
+      <StatsByPeriod v-if="isWeeklyStatsShown" :period-name="'week'" />
+      <StatsByPeriod v-if="!isWeeklyStatsShown" :period-name="'month'" />
       <div class="empty">Hello, darkness, my old friend 🦄</div>
     </div>
   </div>

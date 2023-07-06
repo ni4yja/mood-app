@@ -12,6 +12,13 @@ import { CHART_OPTIONS } from '../helpers/chart-options.js'
 const calendarStore = useCalendarStore()
 const { countDaysWithMood } = useMoodCounter()
 
+const props = defineProps({
+  periodName: {
+    type: String,
+    required: true
+  }
+})
+
 dayjs.locale({
   ...en,
   weekStart: 1
@@ -23,40 +30,64 @@ const selectDate = (newSelectedDate) => {
   selectedDate.value = newSelectedDate
 }
 
-const startOfWeek = computed(() => dayjs(selectedDate.value).startOf('week'))
-const weekdays = computed(() =>
-  [...Array(7)].fill(startOfWeek.value).map((day, index) => {
-    return {
-      date: day.add(index, 'day').format('YYYY-MM-DD')
-    }
-  })
-)
+const startOfPeriod = computed(() => props.periodName === 'week' ? dayjs(selectedDate.value).startOf('week') : dayjs(selectedDate.value).startOf('month'))
+
+const daysOfPeriod = computed(() => {
+  if (props.periodName === 'week') {
+    return [...Array(7)].fill(startOfPeriod.value).map((day, index) => {
+      return {
+        date: day.add(index, 'day').format('YYYY-MM-DD')
+      }
+    })
+  } else {
+    return [...Array(dayjs(selectedDate.value).daysInMonth())].fill(startOfPeriod.value).map((day, index) => {
+      return {
+        date: day.add(index, 'day').format('YYYY-MM-DD')
+      }
+    })
+  }
+})
 
 const today = computed(() => dayjs().format('YYYY-MM-DD'))
 
 const daysWithExcellentMood = computed(() => {
-  return countDaysWithMood(weekdays.value, calendarStore.calendar, 'Excellent')
+  return countDaysWithMood(daysOfPeriod.value, calendarStore.calendar, 'Excellent')
 })
 
 const daysWithGoodMood = computed(() => {
-  return countDaysWithMood(weekdays.value, calendarStore.calendar, 'Good')
+  return countDaysWithMood(daysOfPeriod.value, calendarStore.calendar, 'Good')
 })
 
 const daysWithAwfulMood = computed(() => {
-  return countDaysWithMood(weekdays.value, calendarStore.calendar, 'Awful')
+  return countDaysWithMood(daysOfPeriod.value, calendarStore.calendar, 'Awful')
 })
 
-const series = computed(() => [
-  daysWithExcellentMood.value * 0.07,
-  daysWithGoodMood.value * 0.07,
-  daysWithAwfulMood.value * 0.07,
-  (7 -
-    daysWithExcellentMood.value -
-    daysWithGoodMood.value -
-    daysWithAwfulMood.value) *
-  0.07
-])
-</script>
+const series = computed(() => {
+  if (props.periodName === 'week') {
+    return [
+      daysWithExcellentMood.value * 0.07,
+      daysWithGoodMood.value * 0.07,
+      daysWithAwfulMood.value * 0.07,
+      (7 -
+        daysWithExcellentMood.value -
+        daysWithGoodMood.value -
+        daysWithAwfulMood.value) *
+      0.07
+    ]
+  } else {
+    return [
+      daysWithExcellentMood.value * daysOfPeriod.value.length / 100,
+      daysWithGoodMood.value * daysOfPeriod.value.length / 100,
+      daysWithAwfulMood.value * daysOfPeriod.value.length / 100,
+      (7 -
+        daysWithExcellentMood.value -
+        daysWithGoodMood.value -
+        daysWithAwfulMood.value) *
+      daysOfPeriod.value.length / 100
+    ]
+  }
+})
+</script> 
 
 <template>
   <DayCardStats :mood="'Excellent'" :count="daysWithExcellentMood" />
@@ -74,7 +105,7 @@ const series = computed(() => [
   </div>
 </template>
 
-<style>
+<style scoped>
 .calendar-week {
   display: grid;
   grid-template-areas:
