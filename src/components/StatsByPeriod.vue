@@ -30,7 +30,11 @@ const selectDate = (newSelectedDate) => {
   selectedDate.value = newSelectedDate
 }
 
-const startOfPeriod = computed(() => props.periodName === 'week' ? dayjs(selectedDate.value).startOf('week') : dayjs(selectedDate.value).startOf('month'))
+const startOfPeriod = computed(() =>
+  props.periodName === 'week'
+    ? dayjs(selectedDate.value).startOf('week')
+    : dayjs(selectedDate.value).startOf('month')
+)
 
 const daysOfPeriod = computed(() => {
   if (props.periodName === 'week') {
@@ -40,18 +44,24 @@ const daysOfPeriod = computed(() => {
       }
     })
   } else {
-    return [...Array(dayjs(selectedDate.value).daysInMonth())].fill(startOfPeriod.value).map((day, index) => {
-      return {
-        date: day.add(index, 'day').format('YYYY-MM-DD')
-      }
-    })
+    return [...Array(dayjs(selectedDate.value).daysInMonth())]
+      .fill(startOfPeriod.value)
+      .map((day, index) => {
+        return {
+          date: day.add(index, 'day').format('YYYY-MM-DD')
+        }
+      })
   }
 })
 
 const today = computed(() => dayjs().format('YYYY-MM-DD'))
 
 const daysWithExcellentMood = computed(() => {
-  return countDaysWithMood(daysOfPeriod.value, calendarStore.calendar, 'Excellent')
+  return countDaysWithMood(
+    daysOfPeriod.value,
+    calendarStore.calendar,
+    'Excellent'
+  )
 })
 
 const daysWithGoodMood = computed(() => {
@@ -72,22 +82,23 @@ const series = computed(() => {
         daysWithExcellentMood.value -
         daysWithGoodMood.value -
         daysWithAwfulMood.value) *
-      0.07
+        0.07
     ]
   } else {
     return [
-      daysWithExcellentMood.value * daysOfPeriod.value.length / 100,
-      daysWithGoodMood.value * daysOfPeriod.value.length / 100,
-      daysWithAwfulMood.value * daysOfPeriod.value.length / 100,
-      (7 -
+      (daysWithExcellentMood.value * daysOfPeriod.value.length) / 100,
+      (daysWithGoodMood.value * daysOfPeriod.value.length) / 100,
+      (daysWithAwfulMood.value * daysOfPeriod.value.length) / 100,
+      ((7 -
         daysWithExcellentMood.value -
         daysWithGoodMood.value -
         daysWithAwfulMood.value) *
-      daysOfPeriod.value.length / 100
+        daysOfPeriod.value.length) /
+        100
     ]
   }
 })
-</script> 
+</script>
 
 <template>
   <DayCardStats :mood="'Excellent'" :count="daysWithExcellentMood" />
@@ -95,13 +106,25 @@ const series = computed(() => {
   <DayCardStats :mood="'Awful'" :count="daysWithAwfulMood" />
   <div class="calendar-week">
     <div class="calendar-week-header">
-      <CalendarDateIndicator :selected-date="selectedDate" :period-to-show="'week'" />
-      <CalendarDateSelector :current-date="today" :selected-date="selectedDate" :period-to-change="'week'"
-        @dateSelected="selectDate" />
+      <CalendarDateIndicator
+        :selected-date="selectedDate"
+        :period-to-show="'week'"
+      />
+      <CalendarDateSelector
+        :current-date="today"
+        :selected-date="selectedDate"
+        :period-to-change="'week'"
+        @dateSelected="selectDate"
+      />
     </div>
   </div>
   <div id="chart" class="chart">
-    <apexchart type="pie" :width="380" :options="CHART_OPTIONS" :series="series"></apexchart>
+    <apexchart
+      type="pie"
+      :width="380"
+      :options="CHART_OPTIONS"
+      :series="series"
+    ></apexchart>
   </div>
 </template>
 
@@ -114,15 +137,15 @@ const series = computed(() => {
     'weekdays days days';
 }
 
-.calendar-week>.calendar-week-header {
+.calendar-week > .calendar-week-header {
   grid-area: head;
 }
 
-.calendar-week>.weekdays-grid {
+.calendar-week > .weekdays-grid {
   grid-area: weekdays;
 }
 
-.calendar-week>.days-grid {
+.calendar-week > .days-grid {
   list-style: none;
   padding: 0;
   grid-area: days;

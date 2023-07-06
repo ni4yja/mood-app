@@ -5,7 +5,8 @@ import StatsByPeriod from '../components/StatsByPeriod.vue'
 
 const isWeeklyStatsShown = ref(true)
 
-const toggleSwitcher = () => isWeeklyStatsShown.value = !isWeeklyStatsShown.value
+const toggleSwitcher = () =>
+  (isWeeklyStatsShown.value = !isWeeklyStatsShown.value)
 </script>
 
 <template>
@@ -15,7 +16,7 @@ const toggleSwitcher = () => isWeeklyStatsShown.value = !isWeeklyStatsShown.valu
       <div class="header">
         <h1>See your stats</h1>
         <label class="switch">
-          <input type="checkbox" @click="toggleSwitcher" checked>
+          <input type="checkbox" @click="toggleSwitcher" checked />
           <div class="slider round"></div>
           <span class="labels" data-on="Weekly" data-off="Monthly"></span>
         </label>
@@ -53,7 +54,7 @@ const toggleSwitcher = () => isWeeklyStatsShown.value = !isWeeklyStatsShown.valu
 
 .slider:before {
   position: absolute;
-  content: "";
+  content: '';
   height: 30px;
   width: 30px;
   left: 7px;
@@ -63,15 +64,15 @@ const toggleSwitcher = () => isWeeklyStatsShown.value = !isWeeklyStatsShown.valu
   transition: 0.4s;
 }
 
-input:checked+.slider {
+input:checked + .slider {
   background-color: #646cff;
 }
 
-input:focus+.slider {
+input:focus + .slider {
   box-shadow: 0 0 1px #646cff;
 }
 
-input:checked+.slider:before {
+input:checked + .slider:before {
   -webkit-transform: translateX(80px);
   -ms-transform: translateX(80px);
   transform: translateX(80px);
@@ -113,11 +114,11 @@ input:checked+.slider:before {
   transition: all 0.4s ease-in-out;
 }
 
-.switch input:checked~.labels::after {
+.switch input:checked ~ .labels::after {
   opacity: 0;
 }
 
-.switch input:checked~.labels::before {
+.switch input:checked ~ .labels::before {
   opacity: 1;
 }
 </style>

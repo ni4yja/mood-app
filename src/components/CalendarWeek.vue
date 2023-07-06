@@ -33,15 +33,27 @@ const today = computed(() => dayjs().format('YYYY-MM-DD'))
 <template>
   <div class="calendar-week">
     <div class="calendar-week-header">
-      <CalendarDateIndicator :selected-date="selectedDate" :period-to-show="'week'" />
-      <CalendarDateSelector :current-date="today" :selected-date="selectedDate" :period-to-change="'week'"
-        @dateSelected="selectDate" />
+      <CalendarDateIndicator
+        :selected-date="selectedDate"
+        :period-to-show="'week'"
+      />
+      <CalendarDateSelector
+        :current-date="today"
+        :selected-date="selectedDate"
+        :period-to-change="'week'"
+        @dateSelected="selectDate"
+      />
     </div>
     <div class="weekdays-grid">
       <CalendarWeekdays />
     </div>
     <ol class="days-grid">
-      <CalendarWeekDayItem v-for="day in weekdays" :key="day.date" :day="day" :is-today="day.date === today" />
+      <CalendarWeekDayItem
+        v-for="day in weekdays"
+        :key="day.date"
+        :day="day"
+        :is-today="day.date === today"
+      />
     </ol>
   </div>
 </template>
@@ -55,16 +67,16 @@ const today = computed(() => dayjs().format('YYYY-MM-DD'))
     'weekdays days days';
 }
 
-.calendar-week>.calendar-week-header {
+.calendar-week > .calendar-week-header {
   grid-area: head;
   margin-bottom: 1rem;
 }
 
-.calendar-week>.weekdays-grid {
+.calendar-week > .weekdays-grid {
   grid-area: weekdays;
 }
 
-.calendar-week>.days-grid {
+.calendar-week > .days-grid {
   list-style: none;
   padding: 0;
   grid-area: days;
@@ -78,7 +90,7 @@ const today = computed(() => dayjs().format('YYYY-MM-DD'))
     margin: 0 auto;
   }
 
-  .calendar-week>.calendar-week-header {
+  .calendar-week > .calendar-week-header {
     margin-bottom: 0;
   }
 

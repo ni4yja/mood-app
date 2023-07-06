@@ -4,13 +4,16 @@ import dayjs from 'dayjs/esm/index.js'
 const props = defineProps({
   currentDate: String,
   selectedDate: Object,
-  periodToChange: String,
+  periodToChange: String
 })
 
 const emit = defineEmits(['dateSelected'])
 
 const selectPrevious = () => {
-  let newSelectedDate = dayjs(props.selectedDate).subtract(1, props.periodToChange)
+  let newSelectedDate = dayjs(props.selectedDate).subtract(
+    1,
+    props.periodToChange
+  )
   emit('dateSelected', newSelectedDate)
 }
 

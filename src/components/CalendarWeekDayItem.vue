@@ -87,7 +87,12 @@ const toggleMemory = () => {
 
 <template>
   <li class="calendar-day" :class="dayClasses">
-    <button v-if="moodPerDay?.memory" title="View Memory" class="view-btn" @click="toggleMemory">
+    <button
+      v-if="moodPerDay?.memory"
+      title="View Memory"
+      class="view-btn"
+      @click="toggleMemory"
+    >
       <MemoryIcon />
     </button>
     <span>{{ label }}</span>

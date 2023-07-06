@@ -50,7 +50,7 @@ import StatsIcon from './icons/StatsIcon.vue'
   padding: 0.8rem 1rem;
   background: #f9f9f9;
   border-radius: 1rem;
-  color: #ADA9BB;
+  color: #ada9bb;
   position: relative;
 }
 

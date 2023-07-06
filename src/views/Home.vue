@@ -24,7 +24,10 @@ const setMoodStats = (date, timestamp, mood, memory) => {
 }
 
 const todayMood = computed(() => {
-  const moodList = calendarStore.daysWithMoodColor.filter(day => dayjs(day.date).format('dddd, D MMM YYYY') === formattedDates.value.today)
+  const moodList = calendarStore.daysWithMoodColor.filter(
+    (day) =>
+      dayjs(day.date).format('dddd, D MMM YYYY') === formattedDates.value.today
+  )
   return moodList.length ? moodList[moodList.length - 1] : {}
 })
 
@@ -45,13 +48,22 @@ const closeModal = () => {
     <div class="main-container">
       <h1>How do you feel today?</h1>
       <div class="mood-options">
-        <button class="excellent" @click="setMoodStats(today, timestamp, 'Excellent', '')">
+        <button
+          class="excellent"
+          @click="setMoodStats(today, timestamp, 'Excellent', '')"
+        >
           Excellent
         </button>
-        <button class="good" @click="setMoodStats(today, timestamp, 'Good', '')">
+        <button
+          class="good"
+          @click="setMoodStats(today, timestamp, 'Good', '')"
+        >
           Good
         </button>
-        <button class="awful" @click="setMoodStats(today, timestamp, 'Awful', '')">
+        <button
+          class="awful"
+          @click="setMoodStats(today, timestamp, 'Awful', '')"
+        >
           Awful
         </button>
       </div>
@@ -62,12 +74,22 @@ const closeModal = () => {
         </div>
         <div class="card-content">
           <h2>{{ todayMood?.mood }}</h2>
-          <button v-if="todayMood?.mood" title="Add a Note" class="note-button" @click="openModal()">
+          <button
+            v-if="todayMood?.mood"
+            title="Add a Note"
+            class="note-button"
+            @click="openModal()"
+          >
             <AddNoteIcon />
           </button>
         </div>
       </div>
-      <AddNoteModal v-if="isModalOpen" :isModalOpen="isModalOpen" :todayRecord="todayMood" @hide-modal="closeModal" />
+      <AddNoteModal
+        v-if="isModalOpen"
+        :isModalOpen="isModalOpen"
+        :todayRecord="todayMood"
+        @hide-modal="closeModal"
+      />
       <CalendarWeek />
     </div>
   </div>

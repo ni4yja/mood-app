@@ -7,7 +7,7 @@ dayjs.extend(weekOfYear)
 
 const props = defineProps({
   selectedDate: Object,
-  periodToShow: String,
+  periodToShow: String
 })
 
 const selectedWeek = computed(
@@ -17,12 +17,7 @@ const selectedWeek = computed(
     )}`
 )
 
-const selectedMonth = computed(
-  () =>
-    props.selectedDate.format(
-      'MMMM YYYY'
-    )
-)
+const selectedMonth = computed(() => props.selectedDate.format('MMMM YYYY'))
 </script>
 
 <template>
