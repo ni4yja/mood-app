@@ -1,6 +1,11 @@
 <script setup>
 import HomeIcon from './icons/HomeIcon.vue'
+import MoonIcon from './icons/MoonIcon.vue'
+import SunIcon from './icons/SunIcon.vue'
 import StatsIcon from './icons/StatsIcon.vue'
+import { useThemeStore } from '../stores/theme.js'
+
+const themeStore = useThemeStore()
 </script>
 
 <template>
@@ -19,6 +24,10 @@ import StatsIcon from './icons/StatsIcon.vue'
         </li>
       </ul>
     </div>
+    <button class="toggle-theme-button" @click="themeStore.toggleTheme">
+      <MoonIcon v-if="themeStore.selectedTheme.mode === 'light'" />
+      <SunIcon v-if="themeStore.selectedTheme.mode === 'dark'" />
+    </button>
   </div>
 </template>
 
@@ -45,7 +54,8 @@ import StatsIcon from './icons/StatsIcon.vue'
   gap: 2rem;
 }
 
-.sidebar-menu-container a {
+.sidebar-menu-container a,
+.sidebar-menu-container button {
   display: block;
   padding: 0.8rem 1rem;
   background: #f9f9f9;
@@ -54,8 +64,13 @@ import StatsIcon from './icons/StatsIcon.vue'
   position: relative;
 }
 
-.sidebar-menu-container a.router-link-exact-active {
+.sidebar-menu-container a.router-link-exact-active,
+.sidebar-menu-container button:active {
   color: #646cff;
+}
+
+.sidebar-menu-container button:focus {
+  outline: none;
 }
 
 @media (min-width: 768px) {
