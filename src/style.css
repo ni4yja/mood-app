@@ -10,6 +10,24 @@
   --light-button-border-color-hover-primary: #535bf2;
   --light-button-outline-color-focus-primary: #242424;
 
+  --light-button-text-color-excellent: #242424;
+  --light-button-bg-color-excellent: #fff;
+  --light-button-border-color-excellent: #aea2f0;
+  --light-button-bg-color-hover-excellent: #aea2f0;
+  --light-button-outline-color-focus-excellent: #242424;
+
+  --light-button-text-color-good: #242424;
+  --light-button-bg-color-good: #fff;
+  --light-button-border-color-good: #1bb476;
+  --light-button-bg-color-hover-good: #1bb476;
+  --light-button-outline-color-focus-good: #242424;
+
+  --light-button-text-color-awful: #242424;
+  --light-button-bg-color-awful: #fff;
+  --light-button-border-color-awful: #eb6862;
+  --light-button-bg-color-hover-awful: #eb6862;
+  --light-button-outline-color-focus-awful: #242424;
+
   --dark-text-color: #fff;
   --dark-bg-color: #242424;
 
@@ -18,6 +36,24 @@
   --dark-button-border-color-primary: #fff;
   --dark-button-border-color-hover-primary: #ada9bb;
   --dark-button-outline-color-focus-primary: #ada9bb;
+
+  --dark-button-text-color-excellent: #fff;
+  --dark-button-bg-color-excellent: #aea2f0;
+  --dark-button-border-color-excellent: #aea2f0;
+  --dark-button-border-color-hover-excellent: #fff;
+  --dark-button-outline-color-focus-excellent: #fff;
+
+  --dark-button-text-color-good: #fff;
+  --dark-button-bg-color-good: #1bb476;
+  --dark-button-border-color-good: #1bb476;
+  --dark-button-border-color-hover-good: #fff;
+  --dark-button-outline-color-focus-good: #fff;
+
+  --dark-button-text-color-awful: #fff;
+  --dark-button-bg-color-awful: #eb6862;
+  --dark-button-border-color-awful: #eb6862;
+  --dark-button-border-color-hover-awful: #fff;
+  --dark-button-outline-color-focus-awful: #fff;
 
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;

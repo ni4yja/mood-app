@@ -12,9 +12,9 @@ const props = defineProps({
     type: String,
     default: 'primary',
     validator(value) {
-      return ['primary', 'secondary'].includes(value)
+      return ['primary', 'secondary', 'excellent', 'good', 'awful'].includes(value)
     }
-  }
+  },
 })
 </script>
 
@@ -65,5 +65,80 @@ const props = defineProps({
 .dark-button--primary:focus,
 .dark-button--primary:focus-visible {
   outline: 4px auto var(--dark-button-outline-color-focus-primary);
+}
+
+.light-button--excellent {
+  color: var(--light-button-text-color-excellent);
+  background: var(--light-button-bg-color-excellent);
+  border-color: var(--light-button-border-color-excellent);
+}
+
+.light-button--excellent:hover {
+  background: var(--light-button-bg-color-hover-excellent);
+}
+
+.light-button--excellent:focus,
+.light-button--excellent:focus-visible {
+  outline: 4px auto var(--light-button-outline-color-focus-excellent);
+}
+
+.dark-button--excellent {
+  color: var(--dark-button-text-color-excellent);
+  background: var(--dark-button-bg-color-excellent);
+  border-color: var(--dark-button-border-color-excellent);
+}
+
+.dark-button--excellent:hover {
+  border-color: var(--dark-button-border-color-hover-excellent);
+}
+
+.dark-button--excellent:focus,
+.dark-button--excellent:focus-visible {
+  outline: 4px auto var(--dark-button-outline-color-focus-excellent);
+}
+
+.light-button--good {
+  color: var(--light-button-text-color-good);
+  background: var(--light-button-bg-color-good);
+  border-color: var(--light-button-border-color-good);
+}
+
+.light-button--good:hover {
+  background: var(--light-button-bg-color-hover-good);
+}
+
+.dark-button--good {
+  color: var(--dark-button-text-color-good);
+  background: var(--dark-button-bg-color-good);
+  border-color: var(--dark-button-border-color-good);
+}
+
+.dark-button--good:hover {
+  border-color: var(--dark-button-border-color-hover-good);
+}
+
+.light-button--awful {
+  color: var(--light-button-text-color-awful);
+  background: var(--light-button-bg-color-awful);
+  border-color: var(--light-button-border-color-awful);
+}
+
+.light-button--awful:hover {
+  background: var(--light-button-bg-color-hover-awful);
+}
+
+.dark-button--awful {
+  color: var(--dark-button-text-color-awful);
+  background: var(--dark-button-bg-color-awful);
+  border-color: var(--dark-button-border-color-awful);
+}
+
+.dark-button--awful:hover {
+  border-color: var(--dark-button-border-color-hover-awful);
+}
+
+.dark-button--awful:focus,
+.dark-button--awful:focus-visible {
+  outline: 4px auto var(--dark-button-outline-color-focus-awful);
 }
 </style>

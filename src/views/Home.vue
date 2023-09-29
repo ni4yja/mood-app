@@ -7,6 +7,7 @@ import AddNoteIcon from '../components/icons/AddNoteIcon.vue'
 import AddNoteModal from '../components/AddNoteModal.vue'
 import CalendarWeek from '../components/CalendarWeek.vue'
 import SidebarMenu from '../components/SidebarMenu.vue'
+import BaseButton from '../components/BaseButton.vue'
 
 const calendarStore = useCalendarStore()
 
@@ -48,48 +49,24 @@ const closeModal = () => {
     <div class="main-container">
       <h1>How do you feel today?</h1>
       <div class="mood-options">
-        <button
-          class="excellent"
-          @click="setMoodStats(today, timestamp, 'Excellent', '')"
-        >
-          Excellent
-        </button>
-        <button
-          class="good"
-          @click="setMoodStats(today, timestamp, 'Good', '')"
-        >
-          Good
-        </button>
-        <button
-          class="awful"
-          @click="setMoodStats(today, timestamp, 'Awful', '')"
-        >
-          Awful
-        </button>
+        <BaseButton :text="'Excellent'" :view="'excellent'" @click="setMoodStats(today, timestamp, 'Excellent', '')" />
+        <BaseButton :text="'Good'" :view="'good'" @click="setMoodStats(today, timestamp, 'Good', '')" />
+        <BaseButton :text="'Awful'" :view="'awful'" @click="setMoodStats(today, timestamp, 'Awful', '')" />
       </div>
-      <div class="day-card today" :class="todayMood?.color">
+      <div class=" day-card today" :class="todayMood?.color">
         <div class="day-title">
           <h3>Today</h3>
           <p>{{ formattedDates.today }}</p>
         </div>
         <div class="card-content">
           <h2>{{ todayMood?.mood }}</h2>
-          <button
-            v-if="todayMood?.mood"
-            title="Add a Note"
-            class="note-button"
-            @click="openModal()"
-          >
+          <button v-if="todayMood?.mood" title="Add a Note" class="note-button" @click="openModal()">
             <AddNoteIcon />
           </button>
         </div>
       </div>
-      <AddNoteModal
-        v-if="isModalOpen"
-        :isModalOpen="isModalOpen"
-        :todayRecord="todayMood"
-        @hide-modal="closeModal"
-      />
+      <AddNoteModal v-if="isModalOpen" :isModalOpen="isModalOpen" :todayRecord="todayMood"
+        @hide-modal="closeModal" />
       <CalendarWeek />
     </div>
   </div>
@@ -100,35 +77,6 @@ const closeModal = () => {
   margin: 0 auto 2rem;
   display: flex;
   justify-content: space-around;
-}
-
-.mood-options button {
-  font-family: 'Alegreya', serif;
-  font-weight: 700;
-}
-
-button.excellent {
-  border-color: #aea2f0;
-}
-
-button.excellent:hover {
-  background: #aea2f0;
-}
-
-button.good {
-  border-color: #1bb476;
-}
-
-button.good:hover {
-  background: #1bb476;
-}
-
-button.awful {
-  border-color: #eb6862;
-}
-
-button.awful:hover {
-  background: #eb6862;
 }
 
 .day-card {
