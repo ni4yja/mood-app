@@ -60,13 +60,10 @@ const closeModal = () => {
         </div>
         <div class="card-content">
           <h2>{{ todayMood?.mood }}</h2>
-          <button v-if="todayMood?.mood" title="Add a Note" class="note-button" @click="openModal()">
-            <AddNoteIcon />
-          </button>
+          <BaseButton v-if="todayMood?.mood" title="Add a Note" :icon="'AddNoteIcon'" @click="openModal()" />
         </div>
       </div>
-      <AddNoteModal v-if="isModalOpen" :isModalOpen="isModalOpen" :todayRecord="todayMood"
-        @hide-modal="closeModal" />
+      <AddNoteModal v-if="isModalOpen" :isModalOpen="isModalOpen" :todayRecord="todayMood" @hide-modal="closeModal" />
       <CalendarWeek />
     </div>
   </div>

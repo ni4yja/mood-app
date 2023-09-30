@@ -6,7 +6,6 @@ const themeStore = useThemeStore()
 const props = defineProps({
   text: {
     type: String,
-    required: true
   },
   view: {
     type: String,
@@ -15,12 +14,18 @@ const props = defineProps({
       return ['primary', 'secondary', 'excellent', 'good', 'awful'].includes(value)
     }
   },
+  icon: {
+    type: String,
+  },
 })
 </script>
 
 <template>
   <button class="button" :class="`${themeStore.selectedTheme.mode}-button--${props.view}`">
-    <slot><span>{{ props.text }}</span></slot>
+    <slot>
+      <Icon v-if="props.icon" :name="props.icon" />
+      <span>{{ props.text }}</span>
+    </slot>
   </button>
 </template>
 
