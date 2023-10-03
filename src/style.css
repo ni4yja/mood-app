@@ -10,6 +10,11 @@
   --light-button-border-color-hover-primary: #535bf2;
   --light-button-outline-color-focus-primary: #242424;
 
+  --light-button-text-color-secondary: #242424;
+  --light-button-bg-color-secondary: transaprent;
+  --light-button-border-color-secondary: transparent;
+  --light-button-color-hover-secondary: #3e4145;
+
   --light-button-text-color-excellent: #242424;
   --light-button-bg-color-excellent: #fff;
   --light-button-border-color-excellent: #aea2f0;
@@ -65,15 +70,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
 }
 
 body {

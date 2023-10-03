@@ -3,7 +3,6 @@ import { ref, computed } from 'vue'
 import dayjs from 'dayjs/esm/index.js'
 import relativeTime from 'dayjs/esm/index.js'
 import { useCalendarStore } from '../stores/mood'
-import AddNoteIcon from '../components/icons/AddNoteIcon.vue'
 import AddNoteModal from '../components/AddNoteModal.vue'
 import CalendarWeek from '../components/CalendarWeek.vue'
 import SidebarMenu from '../components/SidebarMenu.vue'
@@ -60,7 +59,8 @@ const closeModal = () => {
         </div>
         <div class="card-content">
           <h2>{{ todayMood?.mood }}</h2>
-          <BaseButton v-if="todayMood?.mood" title="Add a Note" :icon="'AddNoteIcon'" @click="openModal()" />
+          <BaseButton v-if="todayMood?.mood" class="note-button" title="Add a Note" :icon="'AddNoteIcon'"
+            :view="'secondary'" @click="openModal()" />
         </div>
       </div>
       <AddNoteModal v-if="isModalOpen" :isModalOpen="isModalOpen" :todayRecord="todayMood" @hide-modal="closeModal" />
@@ -116,24 +116,13 @@ const closeModal = () => {
 }
 
 .note-button {
-  background: transparent;
-  padding: 0.4rem 0.6rem;
   position: absolute;
-  right: 20px;
-  bottom: 20px;
-}
-
-.note-button:hover,
-.note-button:focus {
-  color: #fbf7ff;
+  right: 0;
+  bottom: 0;
 }
 
 .view-stats {
   margin-top: 3rem;
-}
-
-.note-button:focus {
-  outline-color: #fbf7ff;
 }
 
 @media (min-width: 768px) {

@@ -7,6 +7,9 @@ const props = defineProps({
   text: {
     type: String,
   },
+  icon: {
+    type: String,
+  },
   view: {
     type: String,
     default: 'primary',
@@ -14,14 +17,20 @@ const props = defineProps({
       return ['primary', 'secondary', 'excellent', 'good', 'awful'].includes(value)
     }
   },
-  icon: {
+  size: {
     type: String,
+    default: 'big',
+    validator(value) {
+      return ['big', 'small'].includes(value)
+    }
   },
 })
 </script>
 
 <template>
-  <button class="button" :class="`${themeStore.selectedTheme.mode}-button--${props.view}`">
+  <button class="button" :class="[`${themeStore.selectedTheme.mode}-button--${props.view}`, `button--size-${props.size}`, {
+    'button--icon-only': !props.text && props.icon,
+  }]">
     <slot>
       <Icon v-if="props.icon" :name="props.icon" />
       <span>{{ props.text }}</span>
@@ -42,6 +51,11 @@ const props = defineProps({
   transition: border-color 0.25s;
 }
 
+.button--icon-only.button--size-big {
+  padding: 0.8rem 1rem;
+  font-size: 2rem;
+}
+
 .light-button--primary {
   color: var(--light-button-text-color-primary);
   background: var(--light-button-bg-color-primary);
@@ -55,6 +69,16 @@ const props = defineProps({
 .light-button--primary:focus,
 .light-button--primary:focus-visible {
   outline: 4px auto var(--light-button-outline-color-focus-primary);
+}
+
+.light-button--secondary {
+  color: var(--light-button-text-color-secondary);
+  background: var(--light-button-bg-color-secondary);
+  border-color: var(--light-button-border-color-secondary);
+}
+
+.light-button--secondary:hover {
+  color: var(--light-button-color-hover-secondary);
 }
 
 .dark-button--primary {

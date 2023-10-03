@@ -1,8 +1,8 @@
 <script setup>
-import DeleteIcon from './icons/DeleteIcon.vue'
 import NoteBox from './NoteBox.vue'
 import { ref, computed } from 'vue'
 import { useCalendarStore } from '../stores/mood'
+import BaseButton from './BaseButton.vue'
 
 const calendarStore = useCalendarStore()
 
@@ -30,18 +30,11 @@ const addNote = (note) => {
 
 <template>
   <div class="modal" :class="{ shown: isModalOpen }">
-    <a
-      class="modal-overlay close-btn"
-      aria-label="Close"
-      @click="closeModal()"
-    ></a>
+    <a class="modal-overlay" @click="closeModal()"></a>
+
     <div class="modal-content">
       <div class="modal-header">
-        <a class="close-btn" aria-label="Close" @click="closeModal()">
-          <span class="icon">
-            <DeleteIcon />
-          </span>
-        </a>
+        <BaseButton :icon="'DeleteIcon'" :view="'secondary'" @click="closeModal()" />
       </div>
       <div class="modal-body">
         <h3>
@@ -54,7 +47,7 @@ const addNote = (note) => {
         </div>
       </div>
       <div class="modal-footer">
-        <button class="add-btn" @click="addNote(note)">Save</button>
+        <BaseButton :text="'Save'" @click="addNote(note)" />
       </div>
     </div>
   </div>
@@ -103,7 +96,7 @@ const addNote = (note) => {
 }
 
 .modal .modal-content .modal-header {
-  padding: 1.5rem 1.5rem 1rem;
+  padding: 1.5rem 0 1rem;
   text-align: right;
 }
 
@@ -122,17 +115,6 @@ const addNote = (note) => {
 .modal .modal-content .modal-footer {
   padding: 1rem 1.5rem;
   text-align: left;
-}
-
-.modal-footer .add-btn {
-  border-color: #646cff;
-  background: #646cff;
-  color: #fff;
-}
-
-.modal-footer .add-btn:hover {
-  background: none;
-  color: #213547;
 }
 
 .modal-content .note-wrapper {
