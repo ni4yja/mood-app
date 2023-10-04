@@ -3,6 +3,7 @@
 :root {
   --light-text-color: #242424;
   --light-bg-color: #fff;
+  --light-box-shadow: #f3f3f4;
 
   --light-button-text-color-primary: #242424;
   --light-button-bg-color-primary: #fff;
@@ -40,6 +41,7 @@
 
   --dark-text-color: #fff;
   --dark-bg-color: #242424;
+  --dark-box-shadow: #f3f3f4;
 
   --dark-button-text-color-primary: #fff;
   --dark-button-bg-color-primary: #242424;

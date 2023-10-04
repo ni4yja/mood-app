@@ -21,7 +21,7 @@ const props = defineProps({
     type: String,
     default: 'big',
     validator(value) {
-      return ['big', 'small'].includes(value)
+      return ['big', 'medium', 'small'].includes(value)
     }
   },
 })
@@ -54,6 +54,13 @@ const props = defineProps({
 .button--icon-only.button--size-big {
   padding: 0.6rem 1rem;
   font-size: 2rem;
+  border-radius: 1rem;
+}
+
+.button--icon-only.button--size-medium {
+  max-width: 60px;
+  padding: 0.6rem 1rem;
+  font-size: 1.5rem;
   border-radius: 1rem;
 }
 
