@@ -2,7 +2,7 @@
 import dayjs from 'dayjs/esm/index.js'
 import { computed, ref } from 'vue'
 import { useCalendarStore } from '../stores/mood.js'
-import MemoryIcon from './icons/MemoryIcon.vue'
+import BaseButton from './BaseButton.vue'
 
 const props = defineProps({
   day: Object,
@@ -87,14 +87,8 @@ const toggleMemory = () => {
 
 <template>
   <li class="calendar-day" :class="dayClasses">
-    <button
-      v-if="moodPerDay?.memory"
-      title="View Memory"
-      class="view-btn"
-      @click="toggleMemory"
-    >
-      <MemoryIcon />
-    </button>
+    <BaseButton v-if="moodPerDay?.memory" title="View Memory" :icon="'MemoryIcon'" :view="'secondary'" :size="'small'"
+      class="view-button" @click="toggleMemory" />
     <span>{{ label }}</span>
     <Transition :name="animationNames">
       <div v-if="isMemoryVisible" class="memory-card">
@@ -138,13 +132,10 @@ const toggleMemory = () => {
   flex-direction: column;
 }
 
-.view-btn {
-  background: none;
-  padding: 0.2rem 0.4rem;
-  border-radius: 0;
+.view-button {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 5px;
+  right: 0;
 }
 
 .memory-card {

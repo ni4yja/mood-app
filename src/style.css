@@ -15,6 +15,11 @@
   --light-button-border-color-secondary: transparent;
   --light-button-color-hover-secondary: #3e4145;
 
+  --light-button-text-color-tetriary: #ada9bb;
+  --light-button-bg-color-tetriary: #f9f9f9;
+  --light-button-border-color-tetriary: #f9f9f9;
+  --light-button-color-hover-tetriary: #646cff;
+
   --light-button-text-color-excellent: #242424;
   --light-button-bg-color-excellent: #fff;
   --light-button-border-color-excellent: #aea2f0;

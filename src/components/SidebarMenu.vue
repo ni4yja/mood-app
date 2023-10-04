@@ -1,11 +1,17 @@
 <script setup>
-import HomeIcon from './icons/HomeIcon.vue'
-import MoonIcon from './icons/MoonIcon.vue'
-import SunIcon from './icons/SunIcon.vue'
-import StatsIcon from './icons/StatsIcon.vue'
+import { computed } from 'vue'
 import { useThemeStore } from '../stores/theme.js'
+import BaseButton from './BaseButton.vue'
 
 const themeStore = useThemeStore()
+
+const toggleThemeButtonIcon = computed(() => {
+  if (themeStore.selectedTheme.mode === 'light') {
+    return 'MoonIcon';
+  } else {
+    return 'SunIcon';
+  }
+})
 </script>
 
 <template>
@@ -13,21 +19,21 @@ const themeStore = useThemeStore()
     <div class="nav">
       <ul>
         <li>
-          <router-link to="/">
-            <HomeIcon />
+          <router-link to="/" custom v-slot="{ navigate, isActive, isExactActive }">
+            <BaseButton :icon="'HomeIcon'" :view="'tetriary'" @click="navigate" @keypress.enter="navigate" role="link"
+              :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']" />
           </router-link>
         </li>
         <li>
-          <router-link to="/stats">
-            <StatsIcon />
+          <router-link to="/stats" custom v-slot="{ navigate, isActive, isExactActive }">
+            <BaseButton :icon="'StatsIcon'" :view="'tetriary'" @click="navigate" @keypress.enter="navigate" role="link"
+              :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']" />
           </router-link>
         </li>
       </ul>
     </div>
-    <button class="toggle-theme-button" @click="themeStore.toggleTheme">
-      <MoonIcon v-if="themeStore.selectedTheme.mode === 'light'" />
-      <SunIcon v-if="themeStore.selectedTheme.mode === 'dark'" />
-    </button>
+    <BaseButton class="toggle-theme-button" :icon="toggleThemeButtonIcon" :view="'tetriary'"
+      @click="themeStore.toggleTheme" />
   </div>
 </template>
 
@@ -54,23 +60,8 @@ const themeStore = useThemeStore()
   gap: 2rem;
 }
 
-.sidebar-menu-container a,
-.sidebar-menu-container button {
-  display: block;
-  padding: 0.8rem 1rem;
-  background: #f9f9f9;
-  border-radius: 1rem;
-  color: #ada9bb;
-  position: relative;
-}
-
-.sidebar-menu-container a.router-link-exact-active,
-.sidebar-menu-container button:active {
-  color: #646cff;
-}
-
-.sidebar-menu-container button:focus {
-  outline: none;
+.sidebar-menu-container .router-link-exact-active {
+  color: var(--light-button-color-hover-tetriary);
 }
 
 @media (min-width: 768px) {

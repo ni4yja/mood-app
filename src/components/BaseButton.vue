@@ -14,7 +14,7 @@ const props = defineProps({
     type: String,
     default: 'primary',
     validator(value) {
-      return ['primary', 'secondary', 'excellent', 'good', 'awful'].includes(value)
+      return ['primary', 'secondary', 'tetriary', 'excellent', 'good', 'awful'].includes(value)
     }
   },
   size: {
@@ -52,8 +52,14 @@ const props = defineProps({
 }
 
 .button--icon-only.button--size-big {
-  padding: 0.8rem 1rem;
+  padding: 0.6rem 1rem;
   font-size: 2rem;
+  border-radius: 1rem;
+}
+
+.button--icon-only.button--size-small {
+  padding: 0.2rem 0.4rem;
+  font-size: 1.2rem;
 }
 
 .light-button--primary {
@@ -79,6 +85,16 @@ const props = defineProps({
 
 .light-button--secondary:hover {
   color: var(--light-button-color-hover-secondary);
+}
+
+.light-button--tetriary {
+  color: var(--light-button-text-color-tetriary);
+  background: var(--light-button-bg-color-tetriary);
+  border-color: var(--light-button-border-color-tetriary);
+}
+
+.light-button--tetriary:hover {
+  color: var(--light-button-color-hover-tetriary);
 }
 
 .dark-button--primary {
