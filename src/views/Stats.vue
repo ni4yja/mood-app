@@ -1,12 +1,12 @@
 <script setup>
 import { ref } from 'vue'
 import SidebarMenu from '../components/SidebarMenu.vue'
-import WeeklyStats from '../components/WeeklyStats.vue'
-import MonthlyStats from '../components/MonthlyStats.vue'
+import StatsByPeriod from '../components/StatsByPeriod.vue'
 
 const isWeeklyStatsShown = ref(true)
 
-const toggleSwitcher = () => isWeeklyStatsShown.value = !isWeeklyStatsShown.value
+const toggleSwitcher = () =>
+  (isWeeklyStatsShown.value = !isWeeklyStatsShown.value)
 </script>
 
 <template>
@@ -16,13 +16,13 @@ const toggleSwitcher = () => isWeeklyStatsShown.value = !isWeeklyStatsShown.valu
       <div class="header">
         <h1>See your stats</h1>
         <label class="switch">
-          <input type="checkbox" @click="toggleSwitcher" checked>
+          <input type="checkbox" @click="toggleSwitcher" checked />
           <div class="slider round"></div>
           <span class="labels" data-on="Weekly" data-off="Monthly"></span>
         </label>
       </div>
-      <WeeklyStats v-if="isWeeklyStatsShown" />
-      <MonthlyStats v-if="!isWeeklyStatsShown" />
+      <StatsByPeriod v-if="isWeeklyStatsShown" :period-name="'week'" />
+      <StatsByPeriod v-if="!isWeeklyStatsShown" :period-name="'month'" />
       <div class="empty">Hello, darkness, my old friend 🦄</div>
     </div>
   </div>
@@ -47,32 +47,32 @@ const toggleSwitcher = () => isWeeklyStatsShown.value = !isWeeklyStatsShown.valu
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #646cff;
+  background: var(--link-active-color);
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
 
 .slider:before {
   position: absolute;
-  content: "";
+  content: '';
   height: 30px;
   width: 30px;
   left: 7px;
   bottom: 7px;
-  background-color: white;
+  background: var(--pure-white);
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
 
-input:checked+.slider {
-  background-color: #646cff;
+input:checked + .slider {
+  background: var(--link-active-color);
 }
 
-input:focus+.slider {
-  box-shadow: 0 0 1px #646cff;
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--link-active-color);
 }
 
-input:checked+.slider:before {
+input:checked + .slider:before {
   -webkit-transform: translateX(80px);
   -ms-transform: translateX(80px);
   transform: translateX(80px);
@@ -100,7 +100,7 @@ input:checked+.slider:before {
   content: attr(data-off);
   position: absolute;
   right: 15px;
-  color: #fff;
+  color: var(--pure-white);
   opacity: 1;
   transition: all 0.4s ease-in-out;
 }
@@ -109,16 +109,16 @@ input:checked+.slider:before {
   content: attr(data-on);
   position: absolute;
   left: 15px;
-  color: #ffffff;
+  color: (--pure-white);
   opacity: 0;
   transition: all 0.4s ease-in-out;
 }
 
-.switch input:checked~.labels::after {
+.switch input:checked ~ .labels::after {
   opacity: 0;
 }
 
-.switch input:checked~.labels::before {
+.switch input:checked ~ .labels::before {
   opacity: 1;
 }
 </style>

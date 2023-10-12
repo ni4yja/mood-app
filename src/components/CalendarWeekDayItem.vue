@@ -2,7 +2,7 @@
 import dayjs from 'dayjs/esm/index.js'
 import { computed, ref } from 'vue'
 import { useCalendarStore } from '../stores/mood.js'
-import MemoryIcon from './icons/MemoryIcon.vue'
+import BaseButton from './BaseButton.vue'
 
 const props = defineProps({
   day: Object,
@@ -87,9 +87,15 @@ const toggleMemory = () => {
 
 <template>
   <li class="calendar-day" :class="dayClasses">
-    <button v-if="moodPerDay?.memory" title="View Memory" class="view-btn" @click="toggleMemory">
-      <MemoryIcon />
-    </button>
+    <BaseButton
+      v-if="moodPerDay?.memory"
+      title="View Memory"
+      :icon="'MemoryIcon'"
+      :view="'secondary'"
+      :size="'small'"
+      class="view-button"
+      @click="toggleMemory"
+    />
     <span>{{ label }}</span>
     <Transition :name="animationNames">
       <div v-if="isMemoryVisible" class="memory-card">
@@ -113,33 +119,38 @@ const toggleMemory = () => {
 
 .calendar-day--today {
   padding-top: 4px;
-  background-color: #f9f9f9;
-  border: 2px solid #222362;
+}
+
+.light .calendar-day--today {
+  background: var(--light-card-bg-color);
+  border: 2px solid var(--light-card-border-color);
+}
+
+.dark .calendar-day--today {
+  background: var(--dark-card-bg-color);
+  border: 2px solid var(--dark-card-border-color);
 }
 
 .calendar-day--excellent {
-  background: #aea2f0;
+  background: var(--mood-excellent-primary);
 }
 
 .calendar-day--good {
-  background: #1bb476;
+  background: var(--mood-good-primary);
 }
 
 .calendar-day--awful {
-  background: #eb6862;
+  background: var(--mood-awful-primary);
 }
 
 .calendar-day--extended {
   flex-direction: column;
 }
 
-.view-btn {
-  background: none;
-  padding: 0.2rem 0.4rem;
-  border-radius: 0;
+.view-button {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 5px;
+  right: 0;
 }
 
 .memory-card {
@@ -152,8 +163,12 @@ const toggleMemory = () => {
   right: -2px;
 }
 
-.calendar-day--today .memory-card {
-  border: 2px solid #222362;
+.light .calendar-day--today .memory-card {
+  border: 2px solid var(--light-card-border-color);
+}
+
+.dark .calendar-day--today .memory-card {
+  border: 2px solid var(--dark-card-border-color);
 }
 
 .calendar-day--slide-down .memory-card {

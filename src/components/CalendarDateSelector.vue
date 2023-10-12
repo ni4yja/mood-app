@@ -1,16 +1,20 @@
 <script setup>
 import dayjs from 'dayjs/esm/index.js'
+import BaseButton from './BaseButton.vue'
 
 const props = defineProps({
   currentDate: String,
   selectedDate: Object,
-  periodToChange: String,
+  periodToChange: String
 })
 
 const emit = defineEmits(['dateSelected'])
 
 const selectPrevious = () => {
-  let newSelectedDate = dayjs(props.selectedDate).subtract(1, props.periodToChange)
+  let newSelectedDate = dayjs(props.selectedDate).subtract(
+    1,
+    props.periodToChange
+  )
   emit('dateSelected', newSelectedDate)
 }
 
@@ -27,9 +31,9 @@ const selectNext = () => {
 
 <template>
   <div class="calendar-date-selector">
-    <button @click="selectPrevious">Prev</button>
-    <button @click="selectCurrent">Today</button>
-    <button @click="selectNext">Next</button>
+    <BaseButton :text="'Prev'" @click="selectPrevious" />
+    <BaseButton :text="'Today'" @click="selectCurrent" />
+    <BaseButton :text="'Next'" @click="selectNext" />
   </div>
 </template>
 

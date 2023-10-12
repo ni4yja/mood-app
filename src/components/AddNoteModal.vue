@@ -1,10 +1,12 @@
 <script setup>
-import DeleteIcon from './icons/DeleteIcon.vue'
 import NoteBox from './NoteBox.vue'
 import { ref, computed } from 'vue'
 import { useCalendarStore } from '../stores/mood'
+import { useThemeStore } from '../stores/theme.js'
+import BaseButton from './BaseButton.vue'
 
 const calendarStore = useCalendarStore()
+const themeStore = useThemeStore()
 
 const note = ref('')
 
@@ -29,19 +31,19 @@ const addNote = (note) => {
 </script>
 
 <template>
-  <div class="modal" :class="{ shown: isModalOpen }">
-    <a
-      class="modal-overlay close-btn"
-      aria-label="Close"
-      @click="closeModal()"
-    ></a>
+  <div
+    class="modal"
+    :class="[{ shown: isModalOpen }, themeStore.selectedTheme.mode]"
+  >
+    <a class="modal-overlay" @click="closeModal()"></a>
+
     <div class="modal-content">
       <div class="modal-header">
-        <a class="close-btn" aria-label="Close" @click="closeModal()">
-          <span class="icon">
-            <DeleteIcon />
-          </span>
-        </a>
+        <BaseButton
+          :icon="'DeleteIcon'"
+          :view="'secondary'"
+          @click="closeModal()"
+        />
       </div>
       <div class="modal-body">
         <h3>
@@ -54,7 +56,7 @@ const addNote = (note) => {
         </div>
       </div>
       <div class="modal-footer">
-        <button class="add-btn" @click="addNote(note)">Save</button>
+        <BaseButton :text="'Save'" @click="addNote(note)" />
       </div>
     </div>
   </div>
@@ -89,21 +91,36 @@ const addNote = (note) => {
   right: 0;
   bottom: 0;
   display: block;
-  background-color: #36363680;
+}
+
+.modal.shown.light .modal-overlay {
+  background: var(--light-modal-overlay-bg);
+}
+
+.modal.shown.dark .modal-overlay {
+  background: var(--dark-modal-overlay-bg);
 }
 
 .modal .modal-content {
-  background-color: #fff;
   padding: 0;
   display: block;
   border-radius: 3px;
-  box-shadow: 0 0.4rem 1rem #3636364d;
   z-index: 1;
   max-width: 40rem;
 }
 
+.modal.light .modal-content {
+  background: var(--light-modal-content-bg);
+  box-shadow: 0 0.4rem 1rem var(--light-modal-content-shadow);
+}
+
+.modal.dark .modal-content {
+  background: var(--dark-modal-content-bg);
+  box-shadow: 0 0.4rem 1rem var(--dark-modal-content-shadow);
+}
+
 .modal .modal-content .modal-header {
-  padding: 1.5rem 1.5rem 1rem;
+  padding: 1.5rem 0 1rem;
   text-align: right;
 }
 
@@ -124,20 +141,9 @@ const addNote = (note) => {
   text-align: left;
 }
 
-.modal-footer .add-btn {
-  border-color: #646cff;
-  background: #646cff;
-  color: #fff;
-}
-
-.modal-footer .add-btn:hover {
-  background: none;
-  color: #213547;
-}
-
 .modal-content .note-wrapper {
   padding: 1em;
-  background: #f9f9f9;
+  background: var(--light-gray);
 }
 
 h3 em {
@@ -145,14 +151,14 @@ h3 em {
 }
 
 h3 em.purple {
-  color: #aea2f0;
+  color: var(--mood-excellent-primary);
 }
 
 h3 em.green {
-  color: #1bb476;
+  color: var(--mood-good-primary);
 }
 
 h3 em.red {
-  color: #eb6862;
+  color: var(--mood-awful-primary);
 }
 </style>

@@ -6,9 +6,3 @@
     ></path>
   </svg>
 </template>
-
-<style scoped>
-svg {
-  font-size: 2rem;
-}
-</style>

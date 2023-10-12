@@ -3,10 +3,10 @@ import { ref, computed } from 'vue'
 import dayjs from 'dayjs/esm/index.js'
 import relativeTime from 'dayjs/esm/index.js'
 import { useCalendarStore } from '../stores/mood'
-import AddNoteIcon from '../components/icons/AddNoteIcon.vue'
 import AddNoteModal from '../components/AddNoteModal.vue'
 import CalendarWeek from '../components/CalendarWeek.vue'
 import SidebarMenu from '../components/SidebarMenu.vue'
+import BaseButton from '../components/BaseButton.vue'
 
 const calendarStore = useCalendarStore()
 
@@ -24,7 +24,10 @@ const setMoodStats = (date, timestamp, mood, memory) => {
 }
 
 const todayMood = computed(() => {
-  const moodList = calendarStore.daysWithMoodColor.filter(day => dayjs(day.date).format('dddd, D MMM YYYY') === formattedDates.value.today)
+  const moodList = calendarStore.daysWithMoodColor.filter(
+    (day) =>
+      dayjs(day.date).format('dddd, D MMM YYYY') === formattedDates.value.today
+  )
   return moodList.length ? moodList[moodList.length - 1] : {}
 })
 
@@ -45,15 +48,21 @@ const closeModal = () => {
     <div class="main-container">
       <h1>How do you feel today?</h1>
       <div class="mood-options">
-        <button class="excellent" @click="setMoodStats(today, timestamp, 'Excellent', '')">
-          Excellent
-        </button>
-        <button class="good" @click="setMoodStats(today, timestamp, 'Good', '')">
-          Good
-        </button>
-        <button class="awful" @click="setMoodStats(today, timestamp, 'Awful', '')">
-          Awful
-        </button>
+        <BaseButton
+          :text="'Excellent'"
+          :view="'excellent'"
+          @click="setMoodStats(today, timestamp, 'Excellent', '')"
+        />
+        <BaseButton
+          :text="'Good'"
+          :view="'good'"
+          @click="setMoodStats(today, timestamp, 'Good', '')"
+        />
+        <BaseButton
+          :text="'Awful'"
+          :view="'awful'"
+          @click="setMoodStats(today, timestamp, 'Awful', '')"
+        />
       </div>
       <div class="day-card today" :class="todayMood?.color">
         <div class="day-title">
@@ -62,12 +71,22 @@ const closeModal = () => {
         </div>
         <div class="card-content">
           <h2>{{ todayMood?.mood }}</h2>
-          <button v-if="todayMood?.mood" title="Add a Note" class="note-button" @click="openModal()">
-            <AddNoteIcon />
-          </button>
+          <BaseButton
+            v-if="todayMood?.mood"
+            class="note-button"
+            title="Add a Note"
+            :icon="'AddNoteIcon'"
+            :view="'secondary'"
+            @click="openModal()"
+          />
         </div>
       </div>
-      <AddNoteModal v-if="isModalOpen" :isModalOpen="isModalOpen" :todayRecord="todayMood" @hide-modal="closeModal" />
+      <AddNoteModal
+        v-if="isModalOpen"
+        :isModalOpen="isModalOpen"
+        :todayRecord="todayMood"
+        @hide-modal="closeModal"
+      />
       <CalendarWeek />
     </div>
   </div>
@@ -80,40 +99,9 @@ const closeModal = () => {
   justify-content: space-around;
 }
 
-.mood-options button {
-  font-family: 'Alegreya', serif;
-  font-weight: 700;
-}
-
-button.excellent {
-  border-color: #aea2f0;
-}
-
-button.excellent:hover {
-  background: #aea2f0;
-}
-
-button.good {
-  border-color: #1bb476;
-}
-
-button.good:hover {
-  background: #1bb476;
-}
-
-button.awful {
-  border-color: #eb6862;
-}
-
-button.awful:hover {
-  background: #eb6862;
-}
-
 .day-card {
   min-height: 20rem;
   margin: 1rem;
-  background-color: #f9f9f9;
-  border: 2px solid #222362;
   border-radius: 8px;
   position: relative;
   display: flex;
@@ -121,19 +109,29 @@ button.awful:hover {
   align-items: center;
 }
 
+.light .day-card {
+  background: var(--light-card-bg-color);
+  border: 2px solid var(--light-card-border-color);
+}
+
+.dark .day-card {
+  background: var(--dark-card-bg-color);
+  border: 2px solid var(--dark-card-border-color);
+}
+
 .day-card.purple {
-  background: #aea2f0;
-  border-color: #aea2f0;
+  background: var(--mood-excellent-primary);
+  border-color: var(--mood-excellent-primary);
 }
 
 .day-card.green {
-  background: #1bb476;
-  border-color: #1bb476;
+  background: var(--mood-good-primary);
+  border-color: var(--mood-good-primary);
 }
 
 .day-card.red {
-  background: #eb6862;
-  border-color: #eb6862;
+  background: var(--mood-awful-primary);
+  border-color: var(--mood-awful-primary);
 }
 
 .view-more {
@@ -149,24 +147,13 @@ button.awful:hover {
 }
 
 .note-button {
-  background: transparent;
-  padding: 0.4rem 0.6rem;
   position: absolute;
-  right: 20px;
-  bottom: 20px;
-}
-
-.note-button:hover,
-.note-button:focus {
-  color: #fbf7ff;
+  right: 0;
+  bottom: 0;
 }
 
 .view-stats {
   margin-top: 3rem;
-}
-
-.note-button:focus {
-  outline-color: #fbf7ff;
 }
 
 @media (min-width: 768px) {
