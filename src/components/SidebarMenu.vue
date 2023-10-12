@@ -7,9 +7,9 @@ const themeStore = useThemeStore()
 
 const toggleThemeButtonIcon = computed(() => {
   if (themeStore.selectedTheme.mode === 'light') {
-    return 'MoonIcon';
+    return 'MoonIcon'
   } else {
-    return 'SunIcon';
+    return 'SunIcon'
   }
 })
 </script>
@@ -19,23 +19,54 @@ const toggleThemeButtonIcon = computed(() => {
     <div class="nav">
       <ul>
         <li>
-          <router-link to="/" custom v-slot="{ navigate, isActive, isExactActive }">
-            <BaseButton :icon="'HomeIcon'" :view="'tetriary'" :size="'medium'" @click="navigate"
-              @keypress.enter="navigate" role="link"
-              :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']" />
+          <router-link
+            to="/"
+            custom
+            v-slot="{ navigate, isActive, isExactActive }"
+          >
+            <BaseButton
+              :icon="'HomeIcon'"
+              :view="'tetriary'"
+              :size="'medium'"
+              @click="navigate"
+              @keypress.enter="navigate"
+              role="link"
+              :class="[
+                isActive && 'router-link-active',
+                isExactActive && 'router-link-exact-active'
+              ]"
+            />
           </router-link>
         </li>
         <li>
-          <router-link to="/stats" custom v-slot="{ navigate, isActive, isExactActive }">
-            <BaseButton :icon="'StatsIcon'" :view="'tetriary'" :size="'medium'" @click="navigate"
-              @keypress.enter="navigate" role="link"
-              :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']" />
+          <router-link
+            to="/stats"
+            custom
+            v-slot="{ navigate, isActive, isExactActive }"
+          >
+            <BaseButton
+              :icon="'StatsIcon'"
+              :view="'tetriary'"
+              :size="'medium'"
+              @click="navigate"
+              @keypress.enter="navigate"
+              role="link"
+              :class="[
+                isActive && 'router-link-active',
+                isExactActive && 'router-link-exact-active'
+              ]"
+            />
           </router-link>
         </li>
       </ul>
     </div>
-    <BaseButton class="toggle-theme" :icon="toggleThemeButtonIcon" :view="'tetriary'" :size="'medium'"
-      @click="themeStore.toggleTheme" />
+    <BaseButton
+      class="toggle-theme"
+      :icon="toggleThemeButtonIcon"
+      :view="'tetriary'"
+      :size="'medium'"
+      @click="themeStore.toggleTheme"
+    />
   </div>
 </template>
 
@@ -72,7 +103,7 @@ const toggleThemeButtonIcon = computed(() => {
 }
 
 .sidebar-menu-container .router-link-exact-active {
-  color: var(--light-button-color-hover-tetriary);
+  color: var(--link-active-color);
 }
 
 @media (min-width: 768px) {
@@ -86,10 +117,10 @@ const toggleThemeButtonIcon = computed(() => {
     row-gap: 3em;
 
     grid-template-areas:
-      "."
-      "nav"
-      "toggle-theme"
-      ".";
+      '.'
+      'nav'
+      'toggle-theme'
+      '.';
 
     text-align: center;
   }

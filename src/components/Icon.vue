@@ -5,14 +5,14 @@ import { computed } from 'vue'
 const props = defineProps({
   name: {
     type: String,
-    required: true,
-  },
+    required: true
+  }
 })
 
 const dynamicComponent = computed(() => {
-  const name = props.name.charAt(0).toUpperCase() + props.name.slice(1);
+  const name = props.name.charAt(0).toUpperCase() + props.name.slice(1)
 
-  return defineAsyncComponent(() => import(`./icons/${name}.vue`));
+  return defineAsyncComponent(() => import(`./icons/${name}.vue`))
 })
 </script>
 

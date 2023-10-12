@@ -1,9 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Alegreya:wght@400;700&family=Montserrat:wght@400;500;700&display=swap');
 
 :root {
+  --pure-white: #fff;
+  --light-gray: #f9f9f9;
+
+  --link-active-color: #646cff;
+
+  --mood-excellent-primary: #aea2f0;
+  --mood-excellent-secondary: #786eb8;
+  --mood-excellent-tetriary: #f4ecff;
+  --mood-good-primary: #1bb476;
+  --mood-good-secondary: #005723;
+  --mood-good-tetriary: #b8d673;
+  --mood-awful-primary: #eb6862;
+  --mood-awful-secondary: #630000;
+  --mood-awful-tetriary: #f7736c;
+
   --light-text-color: #242424;
   --light-bg-color: #fff;
   --light-box-shadow: #f3f3f4;
+
+  --light-modal-overlay-bg: #36363680;
+  --light-modal-content-bg: #fff;
+  --light-modal-content-shadow: #3636364d;
+
+  --light-card-bg-color: #f9f9f9;
+  --light-card-border-color: #242424;
 
   --light-button-text-color-primary: #242424;
   --light-button-bg-color-primary: #fff;
@@ -43,11 +65,28 @@
   --dark-bg-color: #242424;
   --dark-box-shadow: #f3f3f4;
 
+  --dark-modal-overlay-bg: #f3f3f420;
+  --dark-modal-content-bg: #242424;
+  --dark-modal-content-shadow: #242424;
+
+  --dark-card-bg-color: #242424;
+  --dark-card-border-color: #f9f9f9;
+
   --dark-button-text-color-primary: #fff;
   --dark-button-bg-color-primary: #242424;
   --dark-button-border-color-primary: #fff;
   --dark-button-border-color-hover-primary: #ada9bb;
   --dark-button-outline-color-focus-primary: #ada9bb;
+
+  --dark-button-text-color-secondary: #fff;
+  --dark-button-bg-color-secondary: transaprent;
+  --dark-button-border-color-secondary: transparent;
+  --dark-button-color-hover-secondary: #fff;
+
+  --dark-button-text-color-tetriary: #ada9bb;
+  --dark-button-bg-color-tetriary: #f9f9f9;
+  --dark-button-border-color-tetriary: #f9f9f9;
+  --dark-button-color-hover-tetriary: #646cff;
 
   --dark-button-text-color-excellent: #fff;
   --dark-button-bg-color-excellent: #aea2f0;
@@ -141,8 +180,8 @@ h3 {
 }
 
 .stats .main-container .empty {
-  background-color: #646cff;
-  color: #fff;
+  background: var(--link-active-color);
+  color: var(--pure-white);
   border-radius: 1rem;
   padding: 2rem;
   margin-top: 2rem;
@@ -196,7 +235,7 @@ h3 {
 
   .stats .main-container .chart {
     grid-area: chart;
-    background: #f9f9f9;
+    background: var(--light-gray);
     border-radius: 1rem;
   }
 

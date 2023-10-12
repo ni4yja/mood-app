@@ -82,7 +82,7 @@ const series = computed(() => {
         daysWithExcellentMood.value -
         daysWithGoodMood.value -
         daysWithAwfulMood.value) *
-      0.07
+        0.07
     ]
   } else {
     return [
@@ -94,7 +94,7 @@ const series = computed(() => {
         daysWithGoodMood.value -
         daysWithAwfulMood.value) *
         daysOfPeriod.value.length) /
-      100
+        100
     ]
   }
 })
@@ -106,13 +106,25 @@ const series = computed(() => {
   <DayCardStats :mood="'Awful'" :count="daysWithAwfulMood" />
   <div class="calendar-week">
     <div class="calendar-week-header">
-      <CalendarDateIndicator :selected-date="selectedDate" :period-to-show="props.periodName" />
-      <CalendarDateSelector :current-date="today" :selected-date="selectedDate" :period-to-change="props.periodName"
-        @dateSelected="selectDate" />
+      <CalendarDateIndicator
+        :selected-date="selectedDate"
+        :period-to-show="props.periodName"
+      />
+      <CalendarDateSelector
+        :current-date="today"
+        :selected-date="selectedDate"
+        :period-to-change="props.periodName"
+        @dateSelected="selectDate"
+      />
     </div>
   </div>
   <div id="chart" class="chart">
-    <apexchart type="pie" :width="380" :options="CHART_OPTIONS" :series="series"></apexchart>
+    <apexchart
+      type="pie"
+      :width="380"
+      :options="CHART_OPTIONS"
+      :series="series"
+    ></apexchart>
   </div>
 </template>
 
@@ -125,15 +137,15 @@ const series = computed(() => {
     'weekdays days days';
 }
 
-.calendar-week>.calendar-week-header {
+.calendar-week > .calendar-week-header {
   grid-area: head;
 }
 
-.calendar-week>.weekdays-grid {
+.calendar-week > .weekdays-grid {
   grid-area: weekdays;
 }
 
-.calendar-week>.days-grid {
+.calendar-week > .days-grid {
   list-style: none;
   padding: 0;
   grid-area: days;

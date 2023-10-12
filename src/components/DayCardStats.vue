@@ -58,17 +58,17 @@ const props = defineProps({
 }
 
 .excellent .mood-icon {
-  color: #786eb8;
-  background: #f4ecff;
+  color: var(--mood-excellent-secondary);
+  background: var(--mood-excellent-tetriary);
 }
 
 .good .mood-icon {
-  color: #005723;
-  background: #b8d673;
+  color: var(--mood-good-secondary);
+  background: var(--mood-good-tetriary);
 }
 
 .awful .mood-icon {
-  color: #630000;
-  background: #f7736c;
+  color: var(--mood-awful-secondary);
+  background: var(--mood-awful-tetriary);
 }
 </style>

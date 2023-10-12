@@ -87,8 +87,15 @@ const toggleMemory = () => {
 
 <template>
   <li class="calendar-day" :class="dayClasses">
-    <BaseButton v-if="moodPerDay?.memory" title="View Memory" :icon="'MemoryIcon'" :view="'secondary'" :size="'small'"
-      class="view-button" @click="toggleMemory" />
+    <BaseButton
+      v-if="moodPerDay?.memory"
+      title="View Memory"
+      :icon="'MemoryIcon'"
+      :view="'secondary'"
+      :size="'small'"
+      class="view-button"
+      @click="toggleMemory"
+    />
     <span>{{ label }}</span>
     <Transition :name="animationNames">
       <div v-if="isMemoryVisible" class="memory-card">
@@ -112,20 +119,28 @@ const toggleMemory = () => {
 
 .calendar-day--today {
   padding-top: 4px;
-  background-color: #f9f9f9;
-  border: 2px solid #222362;
+}
+
+.light .calendar-day--today {
+  background: var(--light-card-bg-color);
+  border: 2px solid var(--light-card-border-color);
+}
+
+.dark .calendar-day--today {
+  background: var(--dark-card-bg-color);
+  border: 2px solid var(--dark-card-border-color);
 }
 
 .calendar-day--excellent {
-  background: #aea2f0;
+  background: var(--mood-excellent-primary);
 }
 
 .calendar-day--good {
-  background: #1bb476;
+  background: var(--mood-good-primary);
 }
 
 .calendar-day--awful {
-  background: #eb6862;
+  background: var(--mood-awful-primary);
 }
 
 .calendar-day--extended {
@@ -148,8 +163,12 @@ const toggleMemory = () => {
   right: -2px;
 }
 
-.calendar-day--today .memory-card {
-  border: 2px solid #222362;
+.light .calendar-day--today .memory-card {
+  border: 2px solid var(--light-card-border-color);
+}
+
+.dark .calendar-day--today .memory-card {
+  border: 2px solid var(--dark-card-border-color);
 }
 
 .calendar-day--slide-down .memory-card {

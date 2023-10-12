@@ -48,22 +48,45 @@ const closeModal = () => {
     <div class="main-container">
       <h1>How do you feel today?</h1>
       <div class="mood-options">
-        <BaseButton :text="'Excellent'" :view="'excellent'" @click="setMoodStats(today, timestamp, 'Excellent', '')" />
-        <BaseButton :text="'Good'" :view="'good'" @click="setMoodStats(today, timestamp, 'Good', '')" />
-        <BaseButton :text="'Awful'" :view="'awful'" @click="setMoodStats(today, timestamp, 'Awful', '')" />
+        <BaseButton
+          :text="'Excellent'"
+          :view="'excellent'"
+          @click="setMoodStats(today, timestamp, 'Excellent', '')"
+        />
+        <BaseButton
+          :text="'Good'"
+          :view="'good'"
+          @click="setMoodStats(today, timestamp, 'Good', '')"
+        />
+        <BaseButton
+          :text="'Awful'"
+          :view="'awful'"
+          @click="setMoodStats(today, timestamp, 'Awful', '')"
+        />
       </div>
-      <div class=" day-card today" :class="todayMood?.color">
+      <div class="day-card today" :class="todayMood?.color">
         <div class="day-title">
           <h3>Today</h3>
           <p>{{ formattedDates.today }}</p>
         </div>
         <div class="card-content">
           <h2>{{ todayMood?.mood }}</h2>
-          <BaseButton v-if="todayMood?.mood" class="note-button" title="Add a Note" :icon="'AddNoteIcon'"
-            :view="'secondary'" @click="openModal()" />
+          <BaseButton
+            v-if="todayMood?.mood"
+            class="note-button"
+            title="Add a Note"
+            :icon="'AddNoteIcon'"
+            :view="'secondary'"
+            @click="openModal()"
+          />
         </div>
       </div>
-      <AddNoteModal v-if="isModalOpen" :isModalOpen="isModalOpen" :todayRecord="todayMood" @hide-modal="closeModal" />
+      <AddNoteModal
+        v-if="isModalOpen"
+        :isModalOpen="isModalOpen"
+        :todayRecord="todayMood"
+        @hide-modal="closeModal"
+      />
       <CalendarWeek />
     </div>
   </div>
@@ -79,8 +102,6 @@ const closeModal = () => {
 .day-card {
   min-height: 20rem;
   margin: 1rem;
-  background-color: #f9f9f9;
-  border: 2px solid #222362;
   border-radius: 8px;
   position: relative;
   display: flex;
@@ -88,19 +109,29 @@ const closeModal = () => {
   align-items: center;
 }
 
+.light .day-card {
+  background: var(--light-card-bg-color);
+  border: 2px solid var(--light-card-border-color);
+}
+
+.dark .day-card {
+  background: var(--dark-card-bg-color);
+  border: 2px solid var(--dark-card-border-color);
+}
+
 .day-card.purple {
-  background: #aea2f0;
-  border-color: #aea2f0;
+  background: var(--mood-excellent-primary);
+  border-color: var(--mood-excellent-primary);
 }
 
 .day-card.green {
-  background: #1bb476;
-  border-color: #1bb476;
+  background: var(--mood-good-primary);
+  border-color: var(--mood-good-primary);
 }
 
 .day-card.red {
-  background: #eb6862;
-  border-color: #eb6862;
+  background: var(--mood-awful-primary);
+  border-color: var(--mood-awful-primary);
 }
 
 .view-more {

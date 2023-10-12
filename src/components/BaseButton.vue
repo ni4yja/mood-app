@@ -5,16 +5,23 @@ const themeStore = useThemeStore()
 
 const props = defineProps({
   text: {
-    type: String,
+    type: String
   },
   icon: {
-    type: String,
+    type: String
   },
   view: {
     type: String,
     default: 'primary',
     validator(value) {
-      return ['primary', 'secondary', 'tetriary', 'excellent', 'good', 'awful'].includes(value)
+      return [
+        'primary',
+        'secondary',
+        'tetriary',
+        'excellent',
+        'good',
+        'awful'
+      ].includes(value)
     }
   },
   size: {
@@ -23,14 +30,21 @@ const props = defineProps({
     validator(value) {
       return ['big', 'medium', 'small'].includes(value)
     }
-  },
+  }
 })
 </script>
 
 <template>
-  <button class="button" :class="[`${themeStore.selectedTheme.mode}-button--${props.view}`, `button--size-${props.size}`, {
-    'button--icon-only': !props.text && props.icon,
-  }]">
+  <button
+    class="button"
+    :class="[
+      `${themeStore.selectedTheme.mode}-button--${props.view}`,
+      `button--size-${props.size}`,
+      {
+        'button--icon-only': !props.text && props.icon
+      }
+    ]"
+  >
     <slot>
       <Icon v-if="props.icon" :name="props.icon" />
       <span>{{ props.text }}</span>
@@ -58,8 +72,10 @@ const props = defineProps({
 }
 
 .button--icon-only.button--size-medium {
+  display: flex;
   max-width: 60px;
-  padding: 0.6rem 1rem;
+  margin: 0 auto;
+  padding: 0.8rem 1rem;
   font-size: 1.5rem;
   border-radius: 1rem;
 }
@@ -94,6 +110,16 @@ const props = defineProps({
   color: var(--light-button-color-hover-secondary);
 }
 
+.dark-button--secondary {
+  color: var(--dark-button-text-color-secondary);
+  background: var(--dark-button-bg-color-secondary);
+  border-color: var(--dark-button-border-color-secondary);
+}
+
+.dark-button--secondary:hover {
+  color: var(--dark-button-color-hover-secondary);
+}
+
 .light-button--tetriary {
   color: var(--light-button-text-color-tetriary);
   background: var(--light-button-bg-color-tetriary);
@@ -102,6 +128,16 @@ const props = defineProps({
 
 .light-button--tetriary:hover {
   color: var(--light-button-color-hover-tetriary);
+}
+
+.dark-button--tetriary {
+  color: var(--dark-button-text-color-tetriary);
+  background: var(--dark-button-bg-color-tetriary);
+  border-color: var(--dark-button-border-color-tetriary);
+}
+
+.dark-button--tetriary:hover {
+  color: var(--dark-button-color-hover-tetriary);
 }
 
 .dark-button--primary {

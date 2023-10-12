@@ -47,7 +47,7 @@ const toggleSwitcher = () =>
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #646cff;
+  background: var(--link-active-color);
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
@@ -59,17 +59,17 @@ const toggleSwitcher = () =>
   width: 30px;
   left: 7px;
   bottom: 7px;
-  background-color: white;
+  background: var(--pure-white);
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
 
 input:checked + .slider {
-  background-color: #646cff;
+  background: var(--link-active-color);
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #646cff;
+  box-shadow: 0 0 1px var(--link-active-color);
 }
 
 input:checked + .slider:before {
@@ -100,7 +100,7 @@ input:checked + .slider:before {
   content: attr(data-off);
   position: absolute;
   right: 15px;
-  color: #fff;
+  color: var(--pure-white);
   opacity: 1;
   transition: all 0.4s ease-in-out;
 }
@@ -109,7 +109,7 @@ input:checked + .slider:before {
   content: attr(data-on);
   position: absolute;
   left: 15px;
-  color: #ffffff;
+  color: (--pure-white);
   opacity: 0;
   transition: all 0.4s ease-in-out;
 }
